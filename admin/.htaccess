@@ -1,0 +1,9 @@
+
+
+ErrorDocument 403 /timex/admin/views/error/403.php
+ErrorDocument 505 /timex/admin/views/error/505.php
+ErrorDocument 400 /timex/admin/views/error/400.php
+ErrorDocument 408 /timex/admin/views/error/408.php
+ErrorDocument 500 /timex/admin/views/error/500.php
+
+ErrorDocument 404 /timex/admin/views/error/404.php

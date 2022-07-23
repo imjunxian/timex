@@ -1,0 +1,4 @@
+RewriteEngine on
+
+RewriteCond %{REQUEST_URI} !^/timex/(views|css|js|admin|client|php)
+RewriteRule (.*) /timex/client/views/$1
