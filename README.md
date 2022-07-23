@@ -4,5 +4,5 @@ Final Year Project - Online Watch Shop
 
 ## Authors
 
-- GitHub - [imjunxian](https://github.com/imjunxian)
+- Lee Jun Xian
 - Heng Wey Chin
