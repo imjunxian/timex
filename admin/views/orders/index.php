@@ -34,10 +34,7 @@ include('../../includes/navbar.php');
             <div class="card">
               <form action="">
                 <div class="card-header">
-                  <h2 class="card-title">Brand Records</h2>
-                  <button type="button" class="btn btn-primary float-right" data-toggle="modal" data-target="#addForm">
-                    <i class="fa fa-plus"></i> Add
-                  </button>
+                  <h2 class="card-title">Order Records</h2>
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body">
