@@ -1,17 +1,6 @@
 <?php
 require __DIR__.'/vendor/autoload.php';
 
-/*use Kreait\Firebase\Factory;
-
-$factory = (new Factory)
-//Generate a new private key in firebase
-->withServiceAccount('')
-//Get the url link from real time database (firebase)
-->withDatabaseUri('');
-
-$database = $factory->createDatabase();*/
-
-
 use Google\Cloud\Firestore\FirestoreClient;
 
 session_start();
