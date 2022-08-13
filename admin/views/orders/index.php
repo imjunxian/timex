@@ -46,9 +46,11 @@ include('../../includes/navbar.php');
                     <table id="dataTable" class="table table-bordered table-striped">
                       <thead>
                         <tr>
-                          <th width="10%">#No</th>
-                          <th>Brands Name</th>
-                          <th>Total Products</th>
+                          <th width="10%">#OrderNo</th>
+                          <th>Customer</th>
+                          <th>Order DateTime</th>
+                          <th>Payment Method</th>
+                          <th>Payment Status</th>
                           <th>Status</th>
                           <th style="text-align:center;" width="150px"><i class="fa fa-cog"></i> Actions</th>
                         </tr>
