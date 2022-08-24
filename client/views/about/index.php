@@ -28,10 +28,11 @@ include('../../includes/navbar.php');
         <img class="img-responsive" src="../client/dist/images/shop/gallery1.png">
       </div>
       <div class="col-md-6">
-        <h2 class="mt-40">About TIMEX</h2>
-        <p class="text-justify">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eius enim, accusantium repellat ex autem numquam iure officiis facere vitae itaque.</p>
+        <h2 class="">About TIMEX</h2>
+        <p class="text-justify mt-20">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eius enim, accusantium repellat ex autem numquam iure officiis facere vitae itaque.</p>
         <p class="text-justify">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nam qui vel cupiditate exercitationem, ea fuga est velit nulla culpa modi quis iste tempora non, suscipit repellendus labore voluptatem dicta amet?</p>
         <p class="text-justify">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nam qui vel cupiditate exercitationem, ea fuga est velit nulla culpa modi quis iste tempora non, suscipit repellendus labore voluptatem dicta amet?</p>
+        <p class="text-justify">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nam qui vel cupiditate exercitationem.</p>
         <a href="../contact/" class="btn btn-main btn-round mt-20">Contact Us</a>
         <a href="../contact/" class="btn btn-main btn-round mt-20">Our Location</a>
       </div>

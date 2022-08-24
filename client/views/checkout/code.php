@@ -2,7 +2,7 @@
 include '../../database/dbconfig.php';
 
 //Login
-if(isset($_POST[''])){
+if(isset($_POST['codBtn'])){
 
 
     try {

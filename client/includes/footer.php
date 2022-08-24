@@ -27,11 +27,11 @@
 					<ul class="footer-menu">
 						<li>
 							<i class="tf-ion-ios-telephone"></i>
-							<span>04-3456 7890</span>
+							<span><?= $docRefInfo['contact'] ?></span>
 						</li>
 						<li>
 							<i class="tf-ion-ios-email"></i>
-							<span>infoTimex@demo.com</span>
+							<span><?= $docRefInfo['email'] ?></span>
 						</li>
 					</ul>
 					<ul class="footer-menu text-uppercase">
@@ -54,7 +54,7 @@
 							<a href="../admin/views/auth/">Admin Login</a>
 						</li>
 					</ul>
-					<p class="copyright-text">Copyright &copy; TIMEX <?php echo date('Y') ?>. All rights reserved.</p>
+					<p class="copyright-text">Copyright &copy; <?= strtoupper($docRefInfo['name']) ?> <?php echo date('Y') ?>. All rights reserved.</p>
 				</div>
 			</div>
 		</div>

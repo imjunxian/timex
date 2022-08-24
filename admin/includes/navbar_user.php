@@ -100,7 +100,14 @@
 
       <a href="../dashboard/" class="brand-link" style="text-align:center;">
         <img src="../../dist/img/favicon.png" alt="INV" class="brand-image" style="opacity: .9;">
-        <span class="brand-text font-weight-bold" style="font-size:20px;margin-right: 45px;">TIMEX Admin</span>
+        <span class="brand-text font-weight-bold" style="font-size:20px;margin-right: 45px;">
+        <?php
+        $companyId = "Qwh7lii8yRbpD62j6u1R";
+        $docRefCompanyInfo = $db->collection('company')->document($companyId)->snapshot();
+        $companyName = strtoupper($docRefCompanyInfo['name']);
+        echo $companyName. " Admin";
+        ?>
+        </span>
       </a>
 
       <!-- Sidebar -->
@@ -146,7 +153,6 @@
               </li>
             <?php } ?>
 
-
                 <li class="nav-item">
                   <a href="../customers/" class="nav-link">
                     <i class="nav-icon fa fa-users"></i>
@@ -166,6 +172,15 @@
                     </p>
                   </a>
                 </li>
+
+                <?php if($_SESSION['user_role'] == "SuperAdmin"){ ?>
+                <li class="nav-item">
+                  <a href="../company/" class="nav-link">
+                    <i class="fas fa-home nav-icon"></i>
+                    <p>Company</p>
+                  </a>
+                </li>
+                <?php } ?>
 
                  <li class="nav-item">
                   <a href="#" class="nav-link" id="prodManage">

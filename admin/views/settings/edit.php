@@ -150,23 +150,12 @@ include('../../includes/navbar.php');
                             Change Password  <i class="fa fa-pencil-alt"></i>
                             </button>
                           </div>
-
-                          <!--<div class="form-group">
-                            <label>Face ID</label><br>
-                            <button type="button" class="btn btn-default" onclick=''>
-                              Enable Face ID
-                            </button>
-                          </div>-->
-
                         </div>
                         <!-- /.card-body -->
 
                         <div class="card-footer">
-                                <a href="../settings/" class="btn btn-secondary">Cancel</a>
-                              <button type="submit" name="editprofile_btn" class="btn btn-primary" >Update</button>
-                              <!--<button type="button" class="btn btn-success toastrDefaultSuccess">
-                                Launch Success Toast
-                              </button>-->
+                          <a href="../settings/" class="btn btn-secondary">Cancel</a>
+                          <button type="submit" name="editprofile_btn" class="btn btn-primary" >Update</button>
                         </div>
                       </form>
                     <?php

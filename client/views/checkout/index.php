@@ -76,13 +76,20 @@ include('../../includes/navbar.php');
                             </li>
                             <li>
                                <span>Shipping:</span>
-                               <span>RM 20</span>
+                               <span>
+                                <?php
+                                $id = "Qwh7lii8yRbpD62j6u1R";
+                                $docRefFee = $db->collection('company')->document($id)->snapshot();
+                                $shipping_fee = $docRefFee['shipping_fee'];
+                                echo "RM " . number_format($shipping_fee,2);
+                                ?>
+                               </span>
                             </li>
                          </ul>
                          <div class="summary-total">
                             <span>Total</span>
                             <?php
-                            $total = $subtotal + 20;
+                            $total = $subtotal + $shipping_fee;
                             $profit = $total - $subcost;
                             ?>
                             <span><?= "RM " . number_format($total,2); ?></span>

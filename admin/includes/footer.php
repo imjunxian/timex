@@ -1,6 +1,6 @@
 <footer class="main-footer">
 <div class="text-center">
-      <strong>Copyright &copy; TIMEX <?php echo date('Y') ?>.</strong> All rights reserved.
+      <strong>Copyright &copy; <?= strtoupper($docRefCompanyInfo['name']) ?> <?php echo date('Y') ?>.</strong> All rights reserved.
 </div>
 </footer>
 

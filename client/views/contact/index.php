@@ -77,15 +77,15 @@ include('../../includes/navbar.php');
           <ul class="contact-short-info mb-20">
             <li>
               <i class="tf-ion-ios-home"></i>
-              <span>NoWhere, Middle of NoWhere, SomeWhere</span>
+              <span><?= $docRefInfo['address'] ?></span>
             </li>
             <li>
               <i class="tf-ion-android-phone-portrait"></i>
-              &nbsp;<span>Phone: 04-3456 7890</span>
+              &nbsp;<span>Phone: <?= $docRefInfo['contact'] ?></span>
             </li>
             <li>
               <i class="tf-ion-android-mail"></i>
-              <span>Email: infoTimex@demo.com</span>
+              <span>Email: <?= $docRefInfo['email'] ?></span>
             </li>
           </ul>
           <!-- Footer Social Links -->

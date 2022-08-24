@@ -7,11 +7,17 @@
 			<div class="col-md-4 col-xs-12 col-sm-4">
 				<div class="contact-number">
 					<i class="tf-ion-ios-telephone"></i>
-					<span>04-3456 7890</span>
+					<span>
+						<?php
+						$id = "Qwh7lii8yRbpD62j6u1R";
+						$docRefInfo = $db->collection('company')->document($id)->snapshot();
+						echo $docRefInfo['contact'];
+						?>
+					</span>
 				</div>
 				<div class="contact-number">
 					<i class="tf-ion-ios-email"></i>
-					<span>infoTimex@demo.com</span>
+					<span><?= $docRefInfo['email'] ?></span>
 				</div>
 			</div>
 			<div class="col-md-4 col-xs-12 col-sm-4">
@@ -25,7 +31,7 @@
 								font-family="AustinBold, Austin" font-weight="bold">
 								<g id="Group" transform="translate(-108.000000, -297.000000)" fill="#000000">
 									<text id="timex">
-										<tspan x="108.94" y="325">TIMEX</tspan>
+										<tspan x="108.94" y="325"><?= strtoupper($docRefInfo['name']) ?></tspan>
 									</text>
 								</g>
 							</g>
