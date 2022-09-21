@@ -45,17 +45,21 @@ include('../../includes/navbar.php');
 
                           $total_cost_per_prod = $row['cost'] * $rowCart['quantity'];
                           $subcost += $total_cost_per_prod;
+
+                          $quantityDB = $row['quantity'];
                           ?>
                           <div class="media product-card">
                             <span class="pull-left">
                               <img class="media-object" src="../admin/dist/img/productImage/<?=$row['image_url']?>" alt="Image" />
                             </span>
-                            <div class="media-body">
-                                <input type="hidden" value="<?=$row->id()?>" name="product_id" id="product_id" required>
-                                <input type="hidden" value="<?=$row['stripe_product_id']?>" name="stripe_product_id" id="stripe_product_id" required>
-                                <input type="hidden" value="<?=$row['stripe_price_id']?>" name="stripe_price_id" id="stripe_price_id" required>
-                                <input type="hidden" value="<?=$rowCart['quantity']?>" name="orderQtt" id="orderQtt" required>
-                                <input type="hidden" value="<?=$row['cost']?>" name="productCost" id="productCost" required>
+                            <div class="media-body" id="countProduct">
+                                <input type="hidden" value="<?=$row->id()?>" name="product_id[]" id="product_id" required>
+                                <input type="hidden" value="<?=$row['stripe_product_id']?>" name="stripe_product_id[]" id="stripe_product_id" required>
+                                <input type="hidden" value="<?=$row['stripe_price_id']?>" name="stripe_price_id[]" id="stripe_price_id" required>
+                                <input type="hidden" value="<?=$rowCart['quantity']?>" name="orderQtt[]" id="orderQtt" required>
+                                <input type="hidden" value="<?=$total_price_per_prod?>" name="sumProductPrice[]" id="sumProductPrice" required>
+                                <input type="hidden" value="<?=$row['price']?>" name="productPrice[]" id="productPrice" required>
+                                <input type="hidden" value="<?=$quantityDB?>" name="quantityDB[]" id="quantityDB" required>
                                 <h4 class="media-heading"><?=$row['name']?></h4>
                                 <p class="price"><?=$rowCart['quantity']?> x <?php echo "RM " . number_format($row['price'],2); ?></p>
                             </div>
@@ -64,6 +68,11 @@ include('../../includes/navbar.php');
                         }
                       }
                       ?>
+                        <input type="hidden" name="countInput" id="countInput" value="" required>
+                        <script>
+                          var numItems = document.querySelectorAll('.media-body #product_id').length;
+                          document.getElementById("countInput").value = numItems;
+                        </script>
                         <hr>
                         <p><a class="btn btn-danger" href="../cart/">Back to cart</a></p><hr>
                         <!--<p>Have a discount ? <a data-toggle="modal" data-target="#coupon-modal" href="#!">enter it here</a></p>-->
@@ -83,6 +92,7 @@ include('../../includes/navbar.php');
                                 $shipping_fee = $docRefFee['shipping_fee'];
                                 echo "RM " . number_format($shipping_fee,2);
                                 ?>
+                                <input type="hidden" name="shipping_fee" value="<?=$shipping_fee?>">
                                </span>
                             </li>
                          </ul>
@@ -147,6 +157,11 @@ include('../../includes/navbar.php');
                         }
                       ?>
                    </div>
+                   <?php
+                   $input = rand(1,9999999);
+                   $orderNumber = str_pad($input, 10, "PO-", STR_PAD_LEFT);
+                   ?>
+                   <input type="hidden" name="orderNo" value="<?=$orderNumber?>" required>
                    <div class="block">
                       <h4 class="widget-title">Payment Method</h4>
                       <p>Select your payment method (COD / Card)</p>
