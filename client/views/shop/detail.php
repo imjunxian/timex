@@ -490,12 +490,6 @@ include('../../includes/navbar.php');
 										<i class="tf-ion-ios-search-strong"></i>
 									</a>
 								</li>
-								<li>
-									<a href="#!" data-toggle="tooltip" title="Add to Wishlist"><i class="tf-ion-ios-heart"></i></a>
-								</li>
-								<li>
-									<a href="#!" data-toggle="tooltip" title="Add to Cart"><i class="tf-ion-android-cart"></i></a>
-								</li>
 							</ul>
 						</div>
 					</div>
