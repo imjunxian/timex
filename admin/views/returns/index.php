@@ -12,12 +12,12 @@ include('../../includes/navbar.php');
         <div class="container-fluid">
             <div class="row mb-2">
             <div class="col-sm-6">
-                <h1 class="m-0">Orders</h1>
+                <h1 class="m-0">Returns</h1>
             </div><!-- /.col -->
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
                 <li class="breadcrumb-item"><a href="../dashboard/">Home</a></li>
-                <li class="breadcrumb-item active">Orders</li>
+                <li class="breadcrumb-item active">Returns</li>
                 </ol>
             </div><!-- /.col -->
             </div><!-- /.row -->
@@ -34,23 +34,21 @@ include('../../includes/navbar.php');
             <div class="card">
               <form action="">
                 <div class="card-header">
-                  <h2 class="card-title">Order Records</h2>
+                  <h2 class="card-title">Returns Records</h2>
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body">
                   <div class="table-responsive">
                   <?php
-                    $docRef = $db->collection('orders')->where('order_status', '=', 'Pending');
+                    $docRef = $db->collection('returns');
                     $snapshot = $docRef->documents();
                   ?>
                     <table id="dataTable" class="table table-bordered table-striped">
                       <thead>
                         <tr>
-                          <th width="13%">#OrderNo</th>
-                          <th>Customer</th>
-                          <th>Order DateTime</th>
-                          <th>Sales</th>
-                          <th width="15%">Payment Method</th>
+                          <th>Images</th>
+                          <th>#OrderNo</th>
+                          <th>Return DateTime</th>
                           <th>Status</th>
                           <th style="text-align:center;" width="150px"><i class="fa fa-cog"></i> Actions</th>
                         </tr>
@@ -58,40 +56,32 @@ include('../../includes/navbar.php');
                       <tbody>
                         <?php
                         foreach($snapshot as $row){
-                          $order_id = $row->id();
-                          $cust_id = $row['customer_id'];
-                          $orderItemDocRef = $db->collection('order_item')->where('order_id','=',$order_id);
-                          $orderItemSnapshot = $orderItemDocRef->documents();
-                          foreach($orderItemSnapshot as $ordItem){
-                            $custSnap = $db->collection('customers')->document($cust_id)->snapshot();
                             ?>
                             <tr>
-                              <td>#<?=$row['order_no']?></td>
-                              <td><?=$custSnap['name']?></td>
-                              <td><?=$row['orderDateTime']?></td>
-                              <td><?=number_format($row['sales'], 2)?></td>
-                              <td><?=$row['payment_method']?></td>
                               <td>
                                 <?php
-                                if($row['order_status'] == "Pending"){
+                                  echo '<a href="../../dist/img/return/'.$row['image_url'].'"><img src="../../dist/img/return/'.$row['image_url'].'" class="img-thumbnail-table" alt="'.$row['order_no'].'" title="'.$row['order_no'].'"/></a>';
+                                ?>
+                              </td>
+                              <td>#<?=$row['order_no']?></td>
+                              <td><?=$row['datetime']?></td>
+                              <td>
+                                <?php
+                                if($row['status'] == "Pending"){
                                   ?><span class="badge badge-warning">Pending</span><?php
-                                }elseif($row['order_status'] == "Delivered"){
-                                  ?><span class="badge badge-info">Delivered</span><?php
-                                }elseif($row['order_status'] == "Completed"){
-                                  ?><span class="badge badge-success">Delivered</span><?php
-                                }elseif($row['order_status'] == "Cancelled"){
-                                  ?><span class="badge badge-danger">Delivered</span><?php
+                                }elseif($row['status'] == "Rejected"){
+                                  ?><span class="badge badge-danger">Rejected</span><?php
+                                }elseif($row['status'] == "Approved"){
+                                  ?><span class="badge badge-success">Approved</span><?php
                                 }
                                 ?>
                               </td>
                               <td style="text-align:center;">
-                                <a href="../orders/detail.php?id=<?=$ordItem->id()?>" name="view" class="btn btn-info"><i class="fa fa-eye"></i></a>
-                                <a href="../orders/edit.php?id=<?=$row->id()?>" name="view" class="btn btn-primary"><i class="fa fa-pencil-alt"></i></a>
+                                <a href="../returns/detail.php?id=<?=$row->id()?>" name="view" class="btn btn-primary"><i class="fa fa-pencil-alt"></i></a>
                               </td>
                             </tr>
                             <?php
-                            }
-                          }
+                        }
                         ?>
                       </tbody>
                     </table>

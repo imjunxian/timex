@@ -279,19 +279,19 @@
                    <li class="nav-item">
                     <a href="../orders/" class="nav-link">
                       <i class="far fa-circle nav-icon"></i>
-                      <p>Customer Orders</p>
+                      <p>Pending Orders</p>
                     </a>
                   </li>
                   <li class="nav-item">
                     <a href="../orders/" class="nav-link">
                       <i class="far fa-circle nav-icon"></i>
-                      <p>Delivery Orders</p>
+                      <p>Delivered Orders</p>
                     </a>
                   </li>
                   <li class="nav-item">
                     <a href="../orders/" class="nav-link">
                       <i class="far fa-circle nav-icon"></i>
-                      <p>Return Requests</p>
+                      <p>Completed Orders</p>
                     </a>
                   </li>
                   <li class="nav-item">
@@ -301,6 +301,13 @@
                     </a>
                   </li>
                 </ul>
+              </li>
+
+              <li class="nav-item">
+                <a href="../returns/" class="nav-link">
+                  <i class="fa fa-exchange-alt nav-icon"></i>
+                  <p>Returns</p>
+                </a>
               </li>
 
               <li class="nav-header">Reports</li>

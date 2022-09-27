@@ -265,14 +265,10 @@ include('../../includes/navbar.php');
               <div class="tab-pane" id="order">
                 <h6>ORDER HISTORY</h6>
                 <hr>
-                <!--<div class="row">
-                  <div class="col-md-9">
-                    <div class="block">
-                        <h5 class="">Oops! Seems like there is no order found in your account.</h5>
-                        <a href="../shop/" class="btn btn-main btn-small btn-round mt-20">Shop Now</a>
-                    </div>
-                  </div>
-                </div>-->
+                <?php
+                    $orderDocRef = $db->collection('orders')->where('customer_id','=',$_SESSION['client_user_id']);
+                    $orderSnapshot = $orderDocRef->documents();
+                ?>
                 <div class="table-responsive">
                   <table class="table m-0 table-striped">
                     <thead>
@@ -285,29 +281,55 @@ include('../../includes/navbar.php');
                       </tr>
                     </thead>
                     <tbody>
-                      <tr>
-                        <td>#PO-9118624</td>
-                        <td>05 Jan 2022 21:44:19</td>
-                        <td>999.00</td>
-                        <td><span class="label label-warning">Pending</span></td>
-                        <td>
-                          <a href="../orders/detail.php?id=<?php echo $row['orderId']; ?>" name="view" class="btn btn-info"><i class="fa fa-eye"></i></a>
-                          <a href="#" name="return" class="btn btn-danger"><i class="fa fa-ban"></i></a>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>#PO-9118624</td>
-                        <td>05 Jan 2022 21:44:19</td>
-                        <td>1699.00</td>
-                        <td><span class="label label-success">Completed</span></td>
-                        <td>
-                          <a href="../orders/detail.php?id=<?php echo $row['orderId']; ?>" name="vi" class="btn btn-info"><i class="fa fa-eye"></i></a>
-                          <a href="#" name="return" class="btn btn-danger"><i class="fa fa-ban"></i></a>
-                        </td>
-                      </tr>
+                      <?php
+                      foreach($orderSnapshot as $ord){
+                        $order_id = $ord->id();
+                        $orderItemDocRef = $db->collection('order_item')->where('order_id','=',$order_id);
+                        $orderItemSnapshot = $orderItemDocRef->documents();
+                        foreach($orderItemSnapshot as $ordItem){
+                          ?>
+                          <tr>
+                            <td>#<?=$ord['order_no']?></td>
+                            <td><?=date('d M Y', strtotime($ord['orderDateTime']));?></td>
+                            <td><?=number_format($ord['sales'], 2)?></td>
+                            <td>
+                              <?php
+                              if($ord['order_status'] == "Pending"){
+                                ?><span class="label label-warning">Pending</span><?php
+                              }elseif($ord['order_status'] == "Delivered"){
+                                ?><span class="label label-info">Delivered</span><?php
+                              }elseif($ord['order_status'] == "Completed"){
+                                ?><span class="label label-success">Delivered</span><?php
+                              }elseif($ord['order_status'] == "Cancelled"){
+                                ?><span class="label label-danger">Delivered</span><?php
+                              }
+                              ?>
+                            </td>
+                            <td>
+                              <a href="#" name="view" class="btn btn-info" data-toggle="modal" data-target="#detailModal" data-id="<?=$ordItem->id()?>"><i class="fa fa-eye"></i></a>
+                              <a href="#" name="return" class="btn btn-danger returnBtn" data-toggle="modal" data-target="#returnModal" data-id="<?=$order_id?>"><i class="fa fa-exchange-alt"></i></a>
+                              <input type="hidden" name="order_number" class="order_number" id="order_number" value="<?=$ord['order_no']?>" required>
+                            </td>
+                          </tr>
+                          <?php
+                        }
+                      }
+                      ?>
                     </tbody>
                   </table>
                 </div>
+
+                <div class="row">
+                  <div class="col-md-9">
+                    <div class="block">
+                        <?php if($orderSnapshot -> rows() == Array()): ?>
+                        <h5 class="">Oops! Seems like there is no order found in your account.</h5>
+                        <?php endif; ?>
+                        <a href="../shop/" class="btn btn-main btn-small btn-round mt-20">Shop Now</a>
+                    </div>
+                  </div>
+                </div>
+
               </div>
             </div>
           </div>
@@ -337,16 +359,199 @@ include('../../includes/navbar.php');
       </div>
     </div>
 
+    <!--Return Request-->
+    <div class="modal fade" id="returnModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title" id="exampleModalLabel">Product Returns
+              <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">×</span>
+              </button>
+            </h4>
+          </div>
+          <form action="code.php" method="POST" id="returnForm" enctype="multipart/form-data">
+            <div class="modal-body">
+              <p class="text-danger">* Note: You're only allowed to return you products within 7 days.</p>
+              <input type="hidden" value="" id="return_order_id" name="return_order_id" required>
+              <input type="hidden" value="" id="return_order_no" name="return_order_no" required>
+              <div class="form-group">
+                <label> Image </label>
+                <input type="file" name="return_img" id="return_img" class="return_img" required>
+              </div>
+              <div class="form-group">
+                <label> Reason </label>
+                <textarea class="form-control" placeholder="Reason of Returning" rows="6" name="return_reason" id="return_reason" required></textarea>
+              </div>
+              <div class="col-12 form-group">
+                <div class="g-recaptcha" data-sitekey="6LdBhb0dAAAAALymVbQF8NTZ7OA9pikagw7Elmwt" id="grecaptcha" data-callback="callback"></div>
+              </div>
+            </div>
+            <div class="modal-footer justify-content-between">
+                <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                <button type="submit" name="submitReturnBtn" class="btn btn-primary" id="submitReturnBtn" disabled>Submit</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <style>
+      .h6{
+          color: rgb(2, 55, 230);
+          margin-top: 2vh;
+          margin-bottom: 0;
+          font-size: 2vh;
+      }
+      .row-m{
+          border-bottom: 1px solid rgba(0,0,0,.2);
+          padding: 2vh 0 2vh 0;
+          justify-content: space-between;
+          flex-wrap: unset;
+          margin: 0;
+      }
+      .ul{
+          padding: 0;
+          display: flex;
+          flex-direction: column;
+          justify-content: space-around;
+      }
+      .ul .li{
+          font-size: 2vh;
+          font-weight: bold;
+          line-height: 4vh;
+      }
+
+      .left{
+          float: left;
+          font-weight: normal;
+          color: rgb(126, 123, 123);
+      }
+      .right{
+          float: right;
+          text-align: right;
+      }
+
+
+      .img{
+          width: 70%;
+      }
+      .btn-m{
+          background-color: rgb(2, 55, 230);
+          border-color: rgb(2, 55, 230);
+          color: white;
+          width: 90%;
+          padding: 2vh;
+          margin-top:0;
+          border-radius: 0.7rem;
+          box-shadow: none;
+      }
+      .openmodal{
+        background-color: white;
+        color: black;
+        width: 30vw;
+
+      }
+    </style>
+
+    <div class="modal fade" id="detailModal">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h4 class="modal-title">Your Orders</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        <!-- Modal body -->
+        <div class="modal-body">
+            <div>
+            <h6 class="h6">Item Details</h6>
+            <div class="row row-m">
+                <div class="col-6">
+                 <img class="img-fluid" height="150" width="150" src="https://i.imgur.com/iItpzRh.jpg">
+                </div>
+                <div class="col-6">
+                    <ul class="ul" type="none">
+                        <li class="li left">Name :</li>
+                        <li class="li left">Quantity :</li>
+                        <li class="li left">Amount:</li>
+                      </ul>
+                </div>
+                <div class="col-6">
+                      <ul class="ul right" type="none" style="margin-top:-6.0em">
+                        <li class="li right">Blablabla</li>
+                        <li class="li right">1</li>
+                        <li class="li right">RM 599</li>
+                      </ul>
+                </div>
+            </div>
+            <h6 class="h6">Order Details</h6>
+            <div class="row row-m">
+                <div class="col-6">
+                    <ul class="ul" type="none">
+                        <li class="li left">Order number:</li>
+                        <li class="li left">Date:</li>
+                        <li class="li left">Price:</li>
+                        <li class="li left">Shipping:</li>
+                        <li class="li left">Total Price:</li>
+                      </ul>
+                </div>
+                <div class="col-6">
+                      <ul class="ul right" type="none" style="margin-top:-11.0em">
+                        <li class="li right">#PO-1234567</li>
+                        <li class="li right">19 Sep 2022</li>
+                        <li class="li right">RM 599</li>
+                        <li class="li right">RM 20</li>
+                        <li class="li right">RM 619</li>
+                      </ul>
+                </div>
+            </div>
+            <h6 class="h6">Shipment</h6>
+            <div class="row row-m" style="border-bottom: none">
+                <div class="col-6">
+                    <ul type="none" class="ul"><li class="li left">Estimated arrival</li></ul>
+                </div>
+                <div class="col-6">
+                    <ul type="none" class="ul" style="margin-top:-2.5em"><li class="li right">22 Sep 2022</li></ul>
+                </div>
+            </div>
+        </div>
+        </div>
+        <!-- Modal footer -->
+        <div class="modal-footer">
+        <button class="btn btn-secondary" type="button" data-dismiss="modal">Close</button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
 <?php
 include('../../includes/script.php');
 include('../../includes/footer.php');
 ?>
 
+<script type="text/javascript" src="https://www.google.com/recaptcha/api.js"></script>
+
 <script type="text/javascript">
-   function callback() {
+  function callback() {
     const submitButton = document.getElementById("loginBtn");
     submitButton.removeAttribute("disabled");
   }
+
+  function callback() {
+    const submitButton = document.getElementById("submitReturnBtn");
+    submitButton.removeAttribute("disabled");
+  }
+
+  $(document).on('click', '.returnBtn', function() {
+    let id = $(this).attr('data-id');
+    $('#return_order_id').val(id);
+  });
+
+  var orderNumber = document.getElementById('order_number').value;
+  document.getElementById("return_order_no").value = orderNumber;
+
   $(function() {
         $.validator.addMethod(
           "regex",
@@ -357,6 +562,35 @@ include('../../includes/footer.php');
           "Please check your input."
         );
 
+        $('#returnForm').validate({
+          rules: {
+            return_img: {
+              required: true,
+            },
+            return_reason: {
+              required: true,
+            },
+          },
+          messages: {
+            return_img: {
+              required: "* Image is required",
+            },
+            return_reason: {
+              required: "* Reason is required",
+            },
+          },
+          errorElement: 'span',
+          errorPlacement: function(error, element) {
+            error.addClass('invalid-feedback');
+            element.closest('.form-group').append(error);
+          },
+          highlight: function(element, errorClass, validClass) {
+            $(element).addClass('is-invalid');
+          },
+          unhighlight: function(element, errorClass, validClass) {
+            $(element).removeClass('is-invalid');
+          }
+        });
         $('#profileForm').validate({
           rules: {
             fullname:{
@@ -503,7 +737,7 @@ include('../../includes/footer.php');
           }
         });
 
-  if (window.history.replaceState) {
+      if (window.history.replaceState) {
         window.history.replaceState(null, null, window.location.href);
       }
 

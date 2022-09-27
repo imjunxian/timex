@@ -158,4 +158,54 @@ if (isset($_POST['updatePasswordBtn'])){
     }
 }
 
+if (isset($_POST['submitReturnBtn'])){
+
+	$img = $_FILES["return_img"]["name"];
+	$storeName = $_FILES["return_img"]["tmp_name"];
+	$dir = "../admin/dist/img/return/";
+	$target_file = $dir . basename($img);
+	$imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
+	$error = $_FILES["return_img"]["error"];
+	$exist = file_exists($target_file);
+
+    $orderid = $_POST["return_order_id"];
+    $orderNum = $_POST["return_order_no"];
+    $reason = $_POST["return_reason"];
+    $status = "Pending";
+    date_default_timezone_set("Asia/Kuala_Lumpur");
+    $datetime = date('d M Y H:i:s');
+
+    $returnDocRef = $db->collection('returns');
+
+    $addInfo = [
+        'order_id' => $orderid,
+        'order_no' => $orderNum,
+        'image_url' => $img,
+        'reason' => $reason,
+        'datetime' => $datetime,
+        'status' => $status,
+    ];
+
+    try{
+    	if($reason == ""){
+            $_SESSION['danger'] = 'All fields are required.';
+            header('Location: ../profile/');
+            exit();
+        }else{
+            $add = $returnDocRef->add($addInfo);
+            if($add){
+                move_uploaded_file($storeName, $target_file);
+                $_SESSION['success'] = 'Your Request is submitted successfully';
+                header('Location: ../profile/');
+                exit();
+            }else{
+                $_SESSION['danger'] = 'Something went wrong. Please try again.';
+                header('Location: .../profile/');
+                exit();
+            }
+    	}
+    }catch(Exception $e){
+        echo 'Exception: '.$e->getMessage();
+    }
+}
 ?>

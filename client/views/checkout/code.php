@@ -49,15 +49,17 @@ if(isset($_POST['codBtn'])){
             $orderRecordData = $orderRecord->documents();
 
             $size = $_POST["countInput"];
-            $count_product = sizeof($size);
 
-            for($x = 0; $x < $count_product; $x++) {
+
+            for($x = 0; $x < $size; $x++) {
                 //OrderItem (need foreach loop) - use orderNo to get orderID in database
-                $order_id = $orderRecordData->id();
+                foreach($orderRecordData as $ord){
+                    $order_id = $ord->id();
+                }
                 $product_id = $_POST['product_id'][$x];
                 $stripe_product_id = $_POST['stripe_product_id'][$x];
                 $orderQtt = $_POST['orderQtt'][$x];
-                $productPrice = $_POST['product_price'][$x];
+                $productPrice = $_POST['productPrice'][$x];
                 $sumProductPrice = $_POST['sumProductPrice'][$x];
                 $quantityDB = $_POST['quantityDB'][$x];
 
@@ -78,8 +80,11 @@ if(isset($_POST['codBtn'])){
                 ];
                 $updateQtt = $productQueryDoc->document($product_id)->set($updateQuantity, ['merge'=>true]);
 
-                //delete cart after checkout
-                $deleteDCart = $cartQueryDoc->document()->where("customer_id", "=", $customer_id)->delete();
+                $clientCart = $cartQueryDoc->where("customer_id", "=", $customer_id)->documents();
+                foreach($clientCart as $cc){
+                    //delete cart after checkout
+                    $deleteCart = $cartQueryDoc->document($cc->id())->delete();
+                }
 
                 if($addOrderItem){
                     $_SESSION['success'] = 'Your Order has been Success!';

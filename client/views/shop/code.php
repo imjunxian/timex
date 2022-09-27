@@ -237,6 +237,10 @@ if(isset($_POST['addToCart'])){
 				$_SESSION['danger'] = 'Quantity exceed the number of stock available.';
 				header("Location: ../shop/detail.php?id={$prod_id}");
 				exit();
+			}elseif($qtt == 0){
+				$_SESSION['danger'] = "Sorry, this product is currently out of stock.";
+				header("Location: ../shop/detail.php?id={$prod_id}");
+				exit();
 			}else{
 				try{
 					$add = $queryDoc->add($addInfo);

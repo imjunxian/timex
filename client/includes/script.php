@@ -19,6 +19,9 @@
     <script src="../client/plugins/slick/slick.min.js"></script>
     <script src="../client/plugins/slick/slick-animation.min.js"></script>
 
+    <!--File Upload js file-->
+    <script src="../admin/plugins/bs-custom-file-input/bs-custom-file-input.min.js"></script>
+
    <!--Validation-->
    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.3/additional-methods.min.js"></script>
    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.js"></script>
