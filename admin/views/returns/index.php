@@ -1,6 +1,6 @@
 <?php
 include('../../database/dbconfig.php');
-$title = "Orders";
+$title = "Returns";
 include('../../includes/header.php');
 include('../../includes/navbar.php');
 ?>
@@ -32,7 +32,7 @@ include('../../includes/navbar.php');
           <div class="col-12">
 
             <div class="card">
-              <form action="">
+              <form action="code.php" method="post">
                 <div class="card-header">
                   <h2 class="card-title">Returns Records</h2>
                 </div>
@@ -46,8 +46,9 @@ include('../../includes/navbar.php');
                     <table id="dataTable" class="table table-bordered table-striped">
                       <thead>
                         <tr>
-                          <th>Images</th>
+                          <th width=10>Images</th>
                           <th>#OrderNo</th>
+                          <th>Reason</th>
                           <th>Return DateTime</th>
                           <th>Status</th>
                           <th style="text-align:center;" width="150px"><i class="fa fa-cog"></i> Actions</th>
@@ -64,6 +65,7 @@ include('../../includes/navbar.php');
                                 ?>
                               </td>
                               <td>#<?=$row['order_no']?></td>
+                              <td><?=$row['reason']?></td>
                               <td><?=$row['datetime']?></td>
                               <td>
                                 <?php
@@ -77,7 +79,11 @@ include('../../includes/navbar.php');
                                 ?>
                               </td>
                               <td style="text-align:center;">
-                                <a href="../returns/detail.php?id=<?=$row->id()?>" name="view" class="btn btn-primary"><i class="fa fa-pencil-alt"></i></a>
+                                <input type="hidden" name="return_id" value="<?php echo $row->id(); ?>">
+                                <input type="hidden" name="order_id" value="<?php echo $row['order_id']; ?>">
+                                <button type="submit" name="approvedBtn" class="btn btn-success" data-toggle="tooltip" title="Approved"><i class="fa fa-check" style="font-size:14px;"></i></button>
+                                <button type="submit" name="rejectedBtn" class="btn btn-danger" data-toggle="tooltip" title="Rejected"><i class="fa fa-times" style="font-size:14px;"></i></button>
+                                <button type="submit" name="pendingBtn" class="btn btn-warning" data-toggle="tooltip" title="Pending"><i class="fa fa-clock" style="font-size:14px;"></i></button>
                               </td>
                             </tr>
                             <?php

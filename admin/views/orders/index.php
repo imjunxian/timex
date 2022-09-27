@@ -49,7 +49,7 @@ include('../../includes/navbar.php');
                           <th width="13%">#OrderNo</th>
                           <th>Customer</th>
                           <th>Order DateTime</th>
-                          <th>Sales</th>
+                          <th>Sales (RM)</th>
                           <th width="15%">Payment Method</th>
                           <th>Status</th>
                           <th style="text-align:center;" width="150px"><i class="fa fa-cog"></i> Actions</th>
@@ -80,7 +80,7 @@ include('../../includes/navbar.php');
                                 }elseif($row['order_status'] == "Completed"){
                                   ?><span class="badge badge-success">Delivered</span><?php
                                 }elseif($row['order_status'] == "Cancelled"){
-                                  ?><span class="badge badge-danger">Delivered</span><?php
+                                  ?><span class="badge badge-danger">Cancelled</span><?php
                                 }
                                 ?>
                               </td>

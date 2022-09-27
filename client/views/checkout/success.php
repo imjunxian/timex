@@ -1,6 +1,6 @@
 <?php
 include '../../database/security.php';
-$title = "Cart";
+$title = "Thank You";
 include('../../includes/header.php');
 include('../../includes/navbar.php');
 ?>
@@ -113,8 +113,8 @@ include('../../includes/navbar.php');
                 <div class="card-body">
                     <div class="block text-center" style="padding:5rem;">
                         <i class="tf-ion-android-checkmark-circle"></i>
-                        <h2 class="text-center">Thank you! For your payment</h2>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore, sed.</p>
+                        <h2 class="text-center">Thank you! For Choosing Us.</h2>
+                        <p>Your order has been placed! You'll receive your items soon.</p>
                         <a href="../shop/" class="btn btn-main mt-20">Continue Shopping</a>
                     </div>
                 </div>

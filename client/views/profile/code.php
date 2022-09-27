@@ -162,7 +162,7 @@ if (isset($_POST['submitReturnBtn'])){
 
 	$img = $_FILES["return_img"]["name"];
 	$storeName = $_FILES["return_img"]["tmp_name"];
-	$dir = "../admin/dist/img/return/";
+	$dir = "../../../admin/dist/img/return/";
 	$target_file = $dir . basename($img);
 	$imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
 	$error = $_FILES["return_img"]["error"];
@@ -208,4 +208,5 @@ if (isset($_POST['submitReturnBtn'])){
         echo 'Exception: '.$e->getMessage();
     }
 }
+
 ?>
