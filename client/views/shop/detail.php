@@ -255,7 +255,7 @@ include('../../includes/navbar.php');
     		          <div class="card-header"><h4>Product Rating Overview</h4></div>
                   <br>
     		          <div class="card-body">
-    			          <div class="row">
+    			          <div class="row" style="margin:0.5em;">
                       <div class="col-sm-4 text-center">
                         <h1 class="text-warning mt-4 mb-4">
                           <b><span id="average_rating">0.0</span> / 5</b>
@@ -318,7 +318,7 @@ include('../../includes/navbar.php');
                           }
                           if($resultCount == 0){
                             ?>
-                            <div class="col-sm-4 text-center">
+                            <div class="col-sm-4 text-center" style="margin-bottom:1em;">
                               <h4 class="">Write Review Here</h4>
                               <button class="btn btn-primary" data-toggle="modal" data-target="#review_modal" id="add_review" style="margin-top:3%;"><i class="fa fa-plus"></i> Review</button>
                             </div>

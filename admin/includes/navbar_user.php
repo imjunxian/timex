@@ -268,39 +268,10 @@
             </li>
 
               <li class="nav-item">
-                <a href="#" class="nav-link">
+                <a href="../orders/" class="nav-link">
                   <i class="nav-icon fa fa-shopping-bag"></i>
-                  <p>
-                    Orders
-                    <i class="fas fa-angle-left right"></i>
-                  </p>
+                  <p>Orders</p>
                 </a>
-                <ul class="nav nav-treeview">
-                   <li class="nav-item">
-                    <a href="../orders/" class="nav-link">
-                      <i class="far fa-circle nav-icon"></i>
-                      <p>Pending Orders</p>
-                    </a>
-                  </li>
-                  <li class="nav-item">
-                    <a href="../orders/" class="nav-link">
-                      <i class="far fa-circle nav-icon"></i>
-                      <p>Delivered Orders</p>
-                    </a>
-                  </li>
-                  <li class="nav-item">
-                    <a href="../orders/" class="nav-link">
-                      <i class="far fa-circle nav-icon"></i>
-                      <p>Completed Orders</p>
-                    </a>
-                  </li>
-                  <li class="nav-item">
-                    <a href="../orders/" class="nav-link">
-                      <i class="far fa-circle nav-icon"></i>
-                      <p>Cancelled Orders</p>
-                    </a>
-                  </li>
-                </ul>
               </li>
 
               <li class="nav-item">

@@ -97,7 +97,15 @@ include('../../includes/navbar.php');
           <div class="small-box bg-warning">
             <div class="inner">
               <?php
-              echo "<h3>3</h3>";
+                $result = 0;
+                $numRow = [];
+                $docValueRef = $db->collection('orders')->where('order_status', '=', 'Completed');
+                $countDoc = $docValueRef->documents();
+                foreach ($countDoc as $count) {
+                  array_push($numRow, $count->data()['order_no']);
+                  $result = count($numRow);
+                }
+                echo "<h3>$result</h3>";
               ?>
               <p>Total Orders</p>
             </div>
@@ -229,7 +237,17 @@ include('../../includes/navbar.php');
                 <a href="../orders/index.php?status=Pending" class="nav-link">
                   Pending Orders
                   <span class="float-right badge bg-warning">
-                    3
+                  <?php
+                    $result = 0;
+                    $numRow = [];
+                    $docValueRef = $db->collection('orders')->where('order_status', '=', 'Pending');
+                    $countDoc = $docValueRef->documents();
+                    foreach ($countDoc as $count) {
+                      array_push($numRow, $count->data()['order_no']);
+                      $result = count($numRow);
+                    }
+                    echo $result;
+                  ?>
                   </span>
                 </a>
               </li>
@@ -237,7 +255,17 @@ include('../../includes/navbar.php');
                 <a href="../orders/index.php?status=Return" class="nav-link">
                   Return Requests
                   <span class="float-right badge bg-danger">
-                    2
+                  <?php
+                    $result = 0;
+                    $numRow = [];
+                    $docValueRef = $db->collection('returns')->where('status', '=', 'Pending');
+                    $countDoc = $docValueRef->documents();
+                    foreach ($countDoc as $count) {
+                      array_push($numRow, $count->data()['order_no']);
+                      $result = count($numRow);
+                    }
+                    echo $result;
+                  ?>
                   </span>
                 </a>
               </li>
@@ -353,7 +381,7 @@ include('../../includes/navbar.php');
                       <i class="fas fa-wrench"></i>
                     </button>
                     <div class="dropdown-menu dropdown-menu-right" role="menu">
-                      <a href="<?php echo $base."orders/"; ?>" class="dropdown-item">View Orders</a>
+                      <a href="../orders/" class="dropdown-item">View Orders</a>
                     </div>
                   </div>
                 <button type="button" class="btn btn-tool" data-card-widget="remove">
@@ -364,11 +392,6 @@ include('../../includes/navbar.php');
             <!-- /.card-header -->
             <div class="card-body p-0">
               <div class="table-responsive">
-                <?php
-                  /*$query_or = "SELECT * FROM orders ORDER BY orderId DESC LIMIT 5";
-                  $query_or_run = mysqli_query($connection,$query_or);*/
-
-                ?>
                       <table class="table m-0 table-striped">
                         <thead>
                           <tr>
@@ -382,34 +405,10 @@ include('../../includes/navbar.php');
 
                         <tbody>
                         <?php
+                          $docRef = $db->collection('orders');
+                          $snapshot = $docRef->documents();
 
-                            ?>
-                            <!--<tr>
-                              <?php $in = $row['invoiceNo']; ?>
-                              <td><?php echo "#$in"; ?> </td>
-                              <td><?php echo $row['orderDateTime']; ?> </td>
-                              <td><?php echo $row['orderCustName']; ?></td>
-                              <td>
-                                <?php
-                                  if($row['orderStatus'] == 'Completed'){
-                                    ?>
-                                    <span class="badge badge-success">Completed</span>
-                                    <?php
-                                  }else if($row['orderStatus'] == 'Pending'){
-                                    ?>
-                                    <span class="badge badge-warning">Pending</span>
-                                    <?php
-                                  }
-                                ?>
-                              </td>
-                              <td>
-                                <a href="../orders/detail.php?id=<?php echo $row['orderId']; ?>" name="vi" class="btn btn-info"><i class="fa fa-eye"></i></a>
-                                <a href="../orders/code.php?id=<?php echo $row['orderId']; ?>" name="ed" class="btn btn-primary"><i class="fa fa-pencil-alt"></i></a>
-                              </td>
-                            </tr>-->
-
-                            <?php
-
+                          if($snapshot == Array()){
                             ?>
                             <tr>
                               <td align="center" colspan="5">
@@ -419,9 +418,49 @@ include('../../includes/navbar.php');
                               </td>
                             </tr>
                             <?php
-
+                          }else{
+                            foreach($snapshot as $row){
+                              $order_id = $row->id();
+                              $cust_id = $row['customer_id'];
+                              $orderItemDocRef = $db->collection('order_item')->where('order_id','=',$order_id);
+                              $orderItemSnapshot = $orderItemDocRef->documents();
+                              foreach($orderItemSnapshot as $ordItem){
+                                $custSnap = $db->collection('customers')->document($cust_id)->snapshot();
+                               ?>
+                               <tr>
+                                 <td><?php echo "#".$row['order_no']; ?></td>
+                                 <td><?php echo $row['orderDateTime']; ?> </td>
+                                 <td><?php echo $custSnap['name']; ?></td>
+                                 <td>
+                                   <?php
+                                     if($row['order_status'] == 'Completed'){
+                                       ?>
+                                       <span class="badge badge-success">Completed</span>
+                                       <?php
+                                     }else if($row['order_status'] == 'Pending'){
+                                       ?>
+                                       <span class="badge badge-warning">Pending</span>
+                                       <?php
+                                     }else if($row['order_status'] == 'Delivered'){
+                                       ?>
+                                       <span class="badge badge-info">Delivered</span>
+                                       <?php
+                                     }else if($row['order_status'] == 'Cancelled'){
+                                       ?>
+                                       <span class="badge badge-danger">Cancelled</span>
+                                       <?php
+                                     }
+                                   ?>
+                                 </td>
+                                 <td>
+                                   <a href="../orders/detail.php?id=<?php echo $row->id() ?>" name="vi" class="btn btn-info"><i class="fa fa-eye"></i></a>
+                                 </td>
+                               </tr>
+                               <?php
+                              }
+                            }
+                          }
                         ?>
-
                   </tbody>
                 </table>
               </div>

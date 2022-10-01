@@ -1,77 +1,26 @@
 <?php
 include('../../database/dbconfig.php');
 
-if(isset($_POST['approvedBtn'])){
+//Call with AJAX to get modal data to edit
+if(isset($_POST["id"])){
 
-    $status = 'Approved';
-    $id = $_POST['return_id'];
-    $order_id = $_POST['order_id'];
+	$id = $_POST['id'];
+
+	$getData = $db->collection('returns')->document($id)->snapshot();
+
+	if ($getData->exists()) {
+		echo json_encode($getData->data());
+	}
+}
+
+if(isset($_POST['updateBtn'])){
+
+    $status = $_POST['editStatus'];
+    $id = $_POST['editReturn_id'];
+    $order_id = $_POST['editOrder_id'];
 
     $queryDoc = $db->collection('returns');
-    $updateInfo = [
-        'status' => $status,
-    ];
-
     $orderDoc = $db->collection('orders');
-    $updateOrderInfo = [
-        'order_status' => 'Cancelled',
-    ];
-
-    try{
-        $update = $queryDoc->document($id)->set($updateInfo, ['merge'=>true]);
-        if($update){
-            $orderDoc->document($order_id)->set($updateOrderInfo, ['merge'=>true]);
-            $_SESSION['success'] = 'Status Updated Successfully';
-            header('Location: ../returns/');
-            exit();
-        }else{
-            $_SESSION['success'] = 'Something went wrong. Please try again';
-            header('Location: ../returns/');
-            exit();
-        }
-    }catch(Exception $e){
-        echo 'Exception: '.$e->getMessage();
-    }
-}
-
-if(isset($_POST['rejectedBtn'])){
-    $status = 'Rejected';
-    $id = $_POST['return_id'];
-    $order_id = $_POST['order_id'];
-
-    $queryDoc = $db->collection('returns');
-
-    $updateInfo = [
-        'status' => $status,
-    ];
-
-    $orderDoc = $db->collection('orders');
-    $updateOrderInfo = [
-        'order_status' => 'Completed',
-    ];
-
-    try{
-        $update = $queryDoc->document($id)->set($updateInfo, ['merge'=>true]);
-        if($update){
-            $orderDoc->document($order_id)->set($updateOrderInfo, ['merge'=>true]);
-            $_SESSION['success'] = 'Status Updated Successfully';
-            header('Location: ../returns/');
-            exit();
-        }else{
-            $_SESSION['success'] = 'Something went wrong. Please try again';
-            header('Location: ../returns/');
-            exit();
-        }
-    }catch(Exception $e){
-        echo 'Exception: '.$e->getMessage();
-    }
-}
-
-if(isset($_POST['pendingBtn'])){
-    $status = 'Pending';
-    $id = $_POST['return_id'];
-    $queryDoc = $db->collection('returns');
-
     $updateInfo = [
         'status' => $status,
     ];
@@ -79,6 +28,17 @@ if(isset($_POST['pendingBtn'])){
     try{
         $update = $queryDoc->document($id)->set($updateInfo, ['merge'=>true]);
         if($update){
+            if($status == "Approved"){
+                $updateOrderInfo = [
+                    'order_status' => 'Cancelled',
+                ];
+                $orderDoc->document($order_id)->set($updateOrderInfo, ['merge'=>true]);
+            }elseif($status == "Rejected"){
+                $updateOrderInfo = [
+                    'order_status' => 'Completed',
+                ];
+                $orderDoc->document($order_id)->set($updateOrderInfo, ['merge'=>true]);
+            }
             $_SESSION['success'] = 'Status Updated Successfully';
             header('Location: ../returns/');
             exit();
@@ -91,6 +51,5 @@ if(isset($_POST['pendingBtn'])){
         echo 'Exception: '.$e->getMessage();
     }
 }
-
 
 ?>

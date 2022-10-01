@@ -79,11 +79,8 @@ include('../../includes/navbar.php');
                                 ?>
                               </td>
                               <td style="text-align:center;">
-                                <input type="hidden" name="return_id" value="<?php echo $row->id(); ?>">
-                                <input type="hidden" name="order_id" value="<?php echo $row['order_id']; ?>">
-                                <button type="submit" name="approvedBtn" class="btn btn-success" data-toggle="tooltip" title="Approved"><i class="fa fa-check" style="font-size:14px;"></i></button>
-                                <button type="submit" name="rejectedBtn" class="btn btn-danger" data-toggle="tooltip" title="Rejected"><i class="fa fa-times" style="font-size:14px;"></i></button>
-                                <button type="submit" name="pendingBtn" class="btn btn-warning" data-toggle="tooltip" title="Pending"><i class="fa fa-clock" style="font-size:14px;"></i></button>
+                                <input type="hidden" name="order_id" id="order_id" value="<?php echo $row['order_id']; ?>">
+                                <a href="#" class="btn btn-primary editBtn" data-id="<?php echo $row->id(); ?>" data-toggle="modal" data-target="#editModal"><i class="fa fa-pencil-alt" style="font-size:14px;" data-toggle="tooltip" title="Edit Status"></i></a>
                               </td>
                             </tr>
                             <?php
@@ -111,8 +108,70 @@ include('../../includes/navbar.php');
 </div>
 <!-- /.content-wrapper -->
 
+<!--Edit Toggles-->
+<div class="modal fade" id="editForm">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Edit Status</h4>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <form action="code.php" id="addF" method="post" >
+          <div class="modal-body">
+            <input type="hidden" class="form-control" id="editReturn_id" value="" name="editReturn_id">
+            <input type="hidden" class="form-control" name="editOrder_id" id="editOrder_id" value="">
+            <div class="form-group">
+              <label>Status</label>
+                <select class="form-control" name="editStatus" id="editStatus">
+                  <option value="Pending">Pending</option>
+                  <option value="Approved">Approved</option>
+                  <option value="Rejected">Rejected</option>
+                </select>
+            </div>
+
+          </div>
+          <!--Submit button-->
+          <div class="modal-footer justify-content-between">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-primary" name="updateBtn">Update</button>
+          </div>
+        </form><!--Form end-->
+      </div>
+      <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+  </div>
+  <!-- /.modal -->
+
 
 <?php
 include('../../includes/script.php');
 include('../../includes/footer.php');
 ?>
+
+<script>
+  //AJAX for get data in modal
+  $(document).on('click', '.editBtn', function() {
+    var id = $(this).attr("data-id");
+    var order_id = document.getElementById('order_id').value;
+    $.ajax({
+        url:"code.php",
+        type:"POST",
+        data:{id:id},
+        dataType: "json",
+        success: function(data){
+            $('#editReturn_id').val(id);
+            $('#editOrder_id').val(order_id);
+            $('option[value="'+data.status+'"]').prop('selected', true);
+
+            $('#updateBtn').val('.editBtn');
+            $('#editForm').modal('show');
+        },
+        error: function (data) {
+            alert("Something went wrong");
+        },
+    });
+  });
+</script>

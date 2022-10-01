@@ -306,7 +306,7 @@ include('../../includes/navbar.php');
                               ?>
                             </td>
                             <td>
-                              <a href="#" name="view" class="btn btn-info" data-toggle="modal" data-target="#detailModal" data-id="<?=$ordItem->id()?>"><i class="fa fa-eye"></i></a>
+                              <a href="#" name="view" class="btn btn-info viewBtn" data-toggle="modal" data-target="#detailModal" data-id="<?=$ordItem->id()?>"><i class="fa fa-eye"></i></a>
                               <a href="#" name="return" class="btn btn-danger returnBtn" data-toggle="modal" data-target="#returnModal" data-id="<?=$order_id?>"><i class="fa fa-exchange-alt"></i></a>
                               <input type="hidden" name="order_number" class="order_number" id="order_number" value="<?=$ord['order_no']?>" required>
                             </td>
@@ -519,7 +519,7 @@ include('../../includes/navbar.php');
         </div>
         <!-- Modal footer -->
         <div class="modal-footer">
-        <button class="btn btn-secondary" type="button" data-dismiss="modal">Close</button>
+        <button class="btn btn-danger" type="button" data-dismiss="modal">Close</button>
         </div>
 
       </div>
@@ -750,4 +750,27 @@ include('../../includes/footer.php');
           input.attr("type", "password");
         }
       });
+
+      //AJAX for get data in modal
+    $(document).ready(function(){
+      $('.viewBtn').on('click', function(){
+          var orderId = $(this).attr("data-id");
+          $.ajax({
+              url:"code.php",
+              type:"POST",
+              data:{orderId:orderId},
+              dataType: "json",
+              success: function(data){
+                  $('#brandName').val(data.name);
+                  $('input[value="'+data.status+'"]').prop('checked', true);
+
+                  $('#updateBtn').val('.editBtn');
+                  $('#editForm').modal('show');
+              },
+              error: function (data) {
+                  alert("Something went wrong");
+              },
+          });
+      });
+    });
 </script>
