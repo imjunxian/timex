@@ -179,7 +179,7 @@ include('../../includes/navbar.php');
                   <option value="Cancelled">Cancelled</option>
                 </select>
             </div>
-
+            <span class="testing"></span>
           </div>
           <!--Submit button-->
           <div class="modal-footer justify-content-between">

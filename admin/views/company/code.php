@@ -21,7 +21,7 @@ if (isset($_POST['editInfo_btn'])){
     $queryDoc = $db->collection('company');
 
     try{
-        if(empty($email) || empty($name) || empty($contact) || empty($address) || empty($fee)){
+        if(empty($email) || empty($name) || empty($contact) || empty($address)){
             $_SESSION['danger'] = 'All fields are required.';
             header("Location: ../company/");
             exit();

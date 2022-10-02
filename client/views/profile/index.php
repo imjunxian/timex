@@ -299,14 +299,14 @@ include('../../includes/navbar.php');
                               }elseif($ord['order_status'] == "Delivered"){
                                 ?><span class="label label-info">Delivered</span><?php
                               }elseif($ord['order_status'] == "Completed"){
-                                ?><span class="label label-success">Delivered</span><?php
+                                ?><span class="label label-success">Completed</span><?php
                               }elseif($ord['order_status'] == "Cancelled"){
-                                ?><span class="label label-danger">Delivered</span><?php
+                                ?><span class="label label-danger">Cancelled</span><?php
                               }
                               ?>
                             </td>
                             <td>
-                              <a href="#" name="view" class="btn btn-info viewBtn" data-toggle="modal" data-target="#detailModal" data-id="<?=$ordItem->id()?>"><i class="fa fa-eye"></i></a>
+                              <a href="#" name="view" class="btn btn-info viewBtn" data-toggle="modal" data-target="#detailModal" data-id="<?=$order_id?>"><i class="fa fa-eye"></i></a>
                               <a href="#" name="return" class="btn btn-danger returnBtn" data-toggle="modal" data-target="#returnModal" data-id="<?=$order_id?>"><i class="fa fa-exchange-alt"></i></a>
                               <input type="hidden" name="order_number" class="order_number" id="order_number" value="<?=$ord['order_no']?>" required>
                             </td>
@@ -450,7 +450,10 @@ include('../../includes/navbar.php');
         background-color: white;
         color: black;
         width: 30vw;
-
+      }
+      .modal-body {
+          max-height: calc(100vh - 210px);
+          overflow-y: auto;
       }
     </style>
 
@@ -468,20 +471,22 @@ include('../../includes/navbar.php');
             <h6 class="h6">Item Details</h6>
             <div class="row row-m">
                 <div class="col-6">
-                 <img class="img-fluid" height="150" width="150" src="https://i.imgur.com/iItpzRh.jpg">
+                 <img class="img-fluid detailImg" height="150" width="150" src="">
                 </div>
                 <div class="col-6">
                     <ul class="ul" type="none">
+                        <li class="li left">SKU :</li>
                         <li class="li left">Name :</li>
                         <li class="li left">Quantity :</li>
                         <li class="li left">Amount:</li>
                       </ul>
                 </div>
                 <div class="col-6">
-                      <ul class="ul right" type="none" style="margin-top:-6.0em">
-                        <li class="li right">Blablabla</li>
-                        <li class="li right">1</li>
-                        <li class="li right">RM 599</li>
+                      <ul class="ul right" type="none" style="margin-top:-8.8em">
+                        <li class="li right detailSku"></li>
+                        <li class="li right detailName"></li>
+                        <li class="li right detailQuantity"></li>
+                        <li class="li right detailAmount"></li>
                       </ul>
                 </div>
             </div>
@@ -491,28 +496,40 @@ include('../../includes/navbar.php');
                     <ul class="ul" type="none">
                         <li class="li left">Order number:</li>
                         <li class="li left">Date:</li>
-                        <li class="li left">Price:</li>
+                        <li class="li left">Subtotal:</li>
                         <li class="li left">Shipping:</li>
                         <li class="li left">Total Price:</li>
                       </ul>
                 </div>
                 <div class="col-6">
                       <ul class="ul right" type="none" style="margin-top:-11.0em">
-                        <li class="li right">#PO-1234567</li>
-                        <li class="li right">19 Sep 2022</li>
-                        <li class="li right">RM 599</li>
-                        <li class="li right">RM 20</li>
-                        <li class="li right">RM 619</li>
+                        <li class="li right detailOrderNo"></li>
+                        <li class="li right detailDate"></li>
+                        <li class="li right detailSubtotal"></li>
+                        <li class="li right detailShipping"></li>
+                        <li class="li right detailTotal"></li>
                       </ul>
                 </div>
             </div>
-            <h6 class="h6">Shipment</h6>
+            <h6 class="h6">Customer Details</h6>
             <div class="row row-m" style="border-bottom: none">
                 <div class="col-6">
-                    <ul type="none" class="ul"><li class="li left">Estimated arrival</li></ul>
+                    <ul type="none" class="ul">
+                      <!--<li class="li left">Name:</li>
+                      <li class="li left">Contact:</li>
+                      <li class="li left">Email:</li>
+                      <li class="li left">Address:</li>-->
+                      <li class="li left">Estimated arrival:</li>
+                    </ul>
                 </div>
                 <div class="col-6">
-                    <ul type="none" class="ul" style="margin-top:-2.5em"><li class="li right">22 Sep 2022</li></ul>
+                    <ul type="none" class="ul" style="margin-top:-2.5em">
+                      <!--<li class="li right detailCustName"></li>
+                      <li class="li right detailContact"></li>
+                      <li class="li right detailEmail"></li>
+                      <li class="li right detailAddress"></li>-->
+                      <li class="li right detailArrival"></li>
+                    </ul>
                 </div>
             </div>
         </div>
@@ -532,6 +549,7 @@ include('../../includes/footer.php');
 ?>
 
 <script type="text/javascript" src="https://www.google.com/recaptcha/api.js"></script>
+<script src="https://momentjs.com/downloads/moment.js"></script>
 
 <script type="text/javascript">
   function callback() {
@@ -751,6 +769,40 @@ include('../../includes/footer.php');
         }
       });
 
+      function number_format(number, decimals, decPoint, thousandsSep){
+        decimals = decimals || 0;
+        number = parseFloat(number);
+
+        if(!decPoint || !thousandsSep){
+            decPoint = '.';
+            thousandsSep = ',';
+        }
+
+        var roundedNumber = Math.round( Math.abs( number ) * ('1e' + decimals) ) + '';
+        var numbersString = decimals ? roundedNumber.slice(0, decimals * -1) : roundedNumber;
+        var decimalsString = decimals ? roundedNumber.slice(decimals * -1) : '';
+        var formattedNumber = "";
+
+        while(numbersString.length > 3){
+            formattedNumber += thousandsSep + numbersString.slice(-3)
+            numbersString = numbersString.slice(0,-3);
+        }
+
+        return (number < 0 ? '-' : '') + numbersString + formattedNumber + (decimalsString ? (decPoint + decimalsString) : '');
+      }
+
+      function formatDate(date) {
+        var d = new Date(date),
+            month = '' + (d.getMonth() + 1),
+            day = '' + d.getDate(),
+            year = d.getFullYear();
+        if (month.length < 2)
+            month = '0' + month;
+        if (day.length < 2)
+            day = '0' + day;
+        return [year, month, day].join('-');
+      }
+
       //AJAX for get data in modal
     $(document).ready(function(){
       $('.viewBtn').on('click', function(){
@@ -761,11 +813,33 @@ include('../../includes/footer.php');
               data:{orderId:orderId},
               dataType: "json",
               success: function(data){
-                  $('#brandName').val(data.name);
-                  $('input[value="'+data.status+'"]').prop('checked', true);
 
-                  $('#updateBtn').val('.editBtn');
-                  $('#editForm').modal('show');
+                var orderDate = new Date(data.orderDateTime);
+                moment().format();
+                var momentOrder=moment(orderDate);
+                var format_date = momentOrder.format("D MMM YYYY");
+                var numberOfDaysToAdd = 5;
+                var result = orderDate.setDate(orderDate.getDate() + numberOfDaysToAdd);
+                var estimateArrival = new Date(result);
+                var momentEst = moment(estimateArrival);
+                var est_format = momentEst.format("D MMM YYYY");
+
+                //order item
+                $('.detailImg').prop('src', '../../../../timex/admin/dist/img/productImage/'+data.image_url+'');
+                $('.detailSku').html('<span>'+data.sku+'</span>');
+                $('.detailName').html('<span>'+data.name+'</span>');
+                $('.detailQuantity').html('<span>'+data.quantity+'</span>');
+                $('.detailAmount').html('<span>RM '+number_format(data.amount, 2)+'</span>');
+                //order
+                $('.detailOrderNo').html('<span>#'+data.order_no+'</span>');
+                $('.detailDate').html('<span>'+format_date+'</span>');
+                $('.detailSubtotal').html('<span>RM '+number_format(data.subtotal,2)+'</span>');
+                $('.detailShipping').html('<span>RM '+number_format(data.shipping_fee,2)+'</span>');
+                $('.detailTotal').html('<span>RM '+number_format(data.sales,2)+'</span>');
+                //EstimateArrival
+                $('.detailArrival').html('<span>'+est_format+'</span>');
+
+                $('#editForm').modal('show');
               },
               error: function (data) {
                   alert("Something went wrong");

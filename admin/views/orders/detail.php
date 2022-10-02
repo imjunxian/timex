@@ -104,6 +104,8 @@ if(isset($_GET["id"])){
                                 <span class="font-italic"><?php echo $custSnap['contact']?></span><br>
                                 <span class="h6"><b>Email: </b></span><br>
                                 <span class="font-italic"><?php echo $custSnap['email']?></span><br>
+                                <span class="h6"><b>Shipping Address: </b></span><br>
+                                <span class="font-italic"><?php echo $custSnap['address']?></span><br>
                                 <?php
                                 ?>
                             </div>
@@ -123,8 +125,9 @@ if(isset($_GET["id"])){
                                     <table class="table table-striped table-hover">
                                     <thead>
                                     <tr>
-                                        <th width="15%">Images</th>
-                                        <th width="30%">Products</th>
+                                        <th width="12%">Images</th>
+                                        <th width="12%">SKU</th>
+                                        <th width="35%">Products</th>
                                         <th>Quantity</th>
                                         <th>Price (RM)</th>
                                         <th>Amount (RM)</th>
@@ -138,6 +141,7 @@ if(isset($_GET["id"])){
                                             ?>
                                             <tr>
                                                 <td><?php echo '<img src="../../dist/img/productImage/'.$rowProd['image_url'].'" class="img-thumbnail-table" alt="'.$rowProd["name"].'" title="'.$rowProd["name"].'"/>'; ?></td>
+                                                <td><?=$rowProd["sku"]?></td>
                                                 <td><?=$rowProd["name"]?></td>
                                                 <td><?=$oi_row["quantity"]?></td>
                                                 <td><?=number_format($oi_row["price"], 2)?></td>
@@ -182,7 +186,13 @@ if(isset($_GET["id"])){
                                         </tr>
                                         <tr>
                                         <th>Payment Method :</th>
-                                        <td><?php echo $row["payment_method"]?></td>
+                                        <td>
+                                            <?php
+                                                if($row["payment_method"] == "COD"){
+                                                    echo "<span>Cash on Delivery (COD)</span>";
+                                                }
+                                            ?>
+                                        </td>
                                         </tr>
                                         <tr>
                                         <th>Status :</th>

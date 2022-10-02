@@ -48,10 +48,11 @@ if(isset($_POST['codBtn'])){
             $orderRecord =  $orderQueryDoc->where('order_no', '==', $orderNo);
             $orderRecordData = $orderRecord->documents();
 
-            $size = $_POST["countInput"];
+            //$count= $_POST["countInput"];
+            $prodID = $_POST["product_id"];
+            $count = count($prodID);
 
-
-            for($x = 0; $x < $size; $x++) {
+            for($x = 0; $x < $count; $x++) {
                 //OrderItem (need foreach loop) - use orderNo to get orderID in database
                 foreach($orderRecordData as $ord){
                     $order_id = $ord->id();
@@ -80,14 +81,14 @@ if(isset($_POST['codBtn'])){
                 ];
                 $updateQtt = $productQueryDoc->document($product_id)->set($updateQuantity, ['merge'=>true]);
 
-                $clientCart = $cartQueryDoc->where("customer_id", "=", $customer_id)->documents();
+                /*$clientCart = $cartQueryDoc->where("customer_id", "=", $customer_id)->documents();
                 foreach($clientCart as $cc){
                     //delete cart after checkout
                     $deleteCart = $cartQueryDoc->document($cc->id())->delete();
-                }
+                }*/
 
                 if($addOrderItem){
-                    $_SESSION['success'] = 'Your Order has been Success!';
+                    $_SESSION['success'] = 'Your Order has Placed Successfully!';
                     header('Location: ../checkout/success.php');
                     exit();
                 }else{
@@ -107,7 +108,5 @@ if(isset($_POST['codBtn'])){
         exit();
     }
 }
-
-
 
 ?>

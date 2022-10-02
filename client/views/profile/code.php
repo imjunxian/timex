@@ -211,42 +211,20 @@ if (isset($_POST['submitReturnBtn'])){
 
 //ajax
 if(isset($_POST["orderId"])){
-
 	$id = $_POST['orderId'];
-
 	$getData = $db->collection('orders')->document($id)->snapshot();
-
-
 	if ($getData->exists()) {
         $order_id = $getData->id();
         $getOrderItem = $db->collection('order_item')->where("order_id", '=', $order_id)->documents();
         foreach($getOrderItem as $ordItem){
             $prod_id = $ordItem["product_id"];
             $getProductData = $db->collection('products')->document($prod_id)->snapshot();
-            echo json_encode($getData->data());
-            echo json_encode($ordItem->data());
-            if ($getProductData->exists()) {
-                echo json_encode($getProductData->data());
-            }
+            $product = $getProductData->data();
+            $order=$getData->data();
+            $orderItem=$ordItem->data();
+            $data = array_merge($product, $orderItem, $order);
+            echo json_encode($data);
         }
 	}
 }
-
-$id = "b235e5a76ba84c9e8cff";
-$getData = $db->collection('orders')->document($id)->snapshot();
-
-
-	if ($getData->exists()) {
-        $order_id = $getData->id();
-        $getOrderItem = $db->collection('order_item')->where("order_id", '=', $order_id)->documents();
-        foreach($getOrderItem as $ordItem){
-            $prod_id = $ordItem["product_id"];
-            $getProductData = $db->collection('products')->document($prod_id)->snapshot();
-            echo json_encode($getData->data());
-            echo json_encode($ordItem->data());
-            if ($getProductData->exists()) {
-                echo json_encode($getProductData->data());
-            }
-        }
-	}
 ?>
