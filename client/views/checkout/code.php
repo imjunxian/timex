@@ -14,6 +14,7 @@ if(isset($_POST['codBtn'])){
     $orderNo = $_POST['orderNo'];
     date_default_timezone_set("Asia/Kuala_Lumpur");
     $orderDateTime = date('d M Y H:i:s');
+    $orderDate = date('YmdHis');
     $paymentMethods = "COD";
     $paymentStatus = "Pending";
     $orderStatus = "Pending";
@@ -23,10 +24,11 @@ if(isset($_POST['codBtn'])){
         'customer_id'=> $customer_id,
         'note' => $note,
         'orderDateTime' => $orderDateTime,
+        'orderDate' => $orderDate,
         'order_no' => $orderNo,
         'order_status' => $orderStatus,
 		'payment_method' => $paymentMethods,
-        'payment_status' => $paymentStatus,
+        //'payment_status' => $paymentStatus,
         'profits'=> $profit,
         'shipping_fee' => $shipping_fee,
         'subcost' => $orderSubcost,
@@ -48,15 +50,23 @@ if(isset($_POST['codBtn'])){
             $orderRecord =  $orderQueryDoc->where('order_no', '==', $orderNo);
             $orderRecordData = $orderRecord->documents();
 
-            //$count= $_POST["countInput"];
-            $prodID = $_POST["product_id"];
+            $count= $_POST["countInput"];
+            /*$prodID = $_POST["product_id"];
             $count = count($prodID);
+            $cartDoc = $cartQueryDoc->where("customer_id", "=", $customer_id)->documents();*/
 
             for($x = 0; $x < $count; $x++) {
-                //OrderItem (need foreach loop) - use orderNo to get orderID in database
+            //foreach($cartDoc as $x){
                 foreach($orderRecordData as $ord){
                     $order_id = $ord->id();
                 }
+                /*$product_id = $_POST['product_id'];
+                $stripe_product_id = $_POST['stripe_product_id'];
+                $orderQtt = $_POST['orderQtt'];
+                $productPrice = $_POST['productPrice'];
+                $sumProductPrice = $_POST['sumProductPrice'];
+                $quantityDB = $_POST['quantityDB'];*/
+
                 $product_id = $_POST['product_id'][$x];
                 $stripe_product_id = $_POST['stripe_product_id'][$x];
                 $orderQtt = $_POST['orderQtt'][$x];
@@ -81,11 +91,12 @@ if(isset($_POST['codBtn'])){
                 ];
                 $updateQtt = $productQueryDoc->document($product_id)->set($updateQuantity, ['merge'=>true]);
 
-                /*$clientCart = $cartQueryDoc->where("customer_id", "=", $customer_id)->documents();
+                $clientCart = $cartQueryDoc->where("customer_id", "=", $customer_id)->documents();
                 foreach($clientCart as $cc){
                     //delete cart after checkout
                     $deleteCart = $cartQueryDoc->document($cc->id())->delete();
-                }*/
+                    //$deleteCart = $cartQueryDoc->document($x->id())->delete();
+                }
 
                 if($addOrderItem){
                     $_SESSION['success'] = 'Your Order has Placed Successfully!';
@@ -108,5 +119,4 @@ if(isset($_POST['codBtn'])){
         exit();
     }
 }
-
 ?>

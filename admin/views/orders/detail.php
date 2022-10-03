@@ -48,14 +48,10 @@ if(isset($_GET["id"])){
                     </div>
                 </div>
             </div>
-        <!-- title row -->
             <div class="row">
                 <div class="col-md-12">
-                    <!-- general form elements -->
                         <form action="code.php" id="addF" method="POST">
                             <div class="invoice p-3 mb-3">
-                            <!-- title row -->
-
                                     <div class="row">
                                         <div class="col-lg-9 col-md-9 col-sm-9">
                                             <h4>Purchasing Invoice <br>

@@ -46,47 +46,61 @@ include('../../includes/navbar.php');
                     <table id="dataTable" class="table table-bordered table-striped">
                       <thead>
                         <tr>
-                          <th width=10>Images</th>
+                          <th width="10">Images</th>
                           <th>#OrderNo</th>
+                          <th>Customer</th>
                           <th>Reason</th>
                           <th>Return DateTime</th>
                           <th>Status</th>
-                          <th style="text-align:center;" width="150px"><i class="fa fa-cog"></i> Actions</th>
+                          <th style="text-align:center;" width="100px"><i class="fa fa-cog"></i> Actions</th>
                         </tr>
                       </thead>
                       <tbody>
                         <?php
                         foreach($snapshot as $row){
-                            ?>
-                            <tr>
-                              <td>
-                                <?php
-                                  echo '<a href="../../dist/img/return/'.$row['image_url'].'"><img src="../../dist/img/return/'.$row['image_url'].'" class="img-thumbnail-table" alt="'.$row['order_no'].'" title="'.$row['order_no'].'"/></a>';
-                                ?>
-                              </td>
-                              <td>#<?=$row['order_no']?></td>
-                              <td><?=$row['reason']?></td>
-                              <td><?=$row['datetime']?></td>
-                              <td>
-                                <?php
-                                if($row['status'] == "Pending"){
-                                  ?><span class="badge badge-warning">Pending</span><?php
-                                }elseif($row['status'] == "Rejected"){
-                                  ?><span class="badge badge-danger">Rejected</span><?php
-                                }elseif($row['status'] == "Approved"){
-                                  ?><span class="badge badge-success">Approved</span><?php
-                                }
-                                ?>
-                              </td>
-                              <td style="text-align:center;">
-                                <input type="hidden" name="order_id" id="order_id" value="<?php echo $row['order_id']; ?>">
-                                <a href="#" class="btn btn-primary editBtn" data-id="<?php echo $row->id(); ?>" data-toggle="modal" data-target="#editModal"><i class="fa fa-pencil-alt" style="font-size:14px;" data-toggle="tooltip" title="Edit Status"></i></a>
-                              </td>
-                            </tr>
-                            <?php
-                        }
+                          $cust_id = $row['customer_id'];
+                          $custSnap = $db->collection('customers')->document($cust_id)->snapshot();
+                        ?>
+                          <tr>
+                            <td>
+                              <?php
+                                echo '<a href="../../dist/img/return/'.$row['image_url'].'"><img src="../../dist/img/return/'.$row['image_url'].'" class="img-thumbnail-table" alt="'.$row['order_no'].'" title="'.$row['order_no'].'"/></a>';
+                              ?>
+                            </td>
+                            <td>#<?=$row['order_no']?></td>
+                            <td><?=$custSnap['name']?></td>
+                            <td><?=$row['reason']?></td>
+                            <td><?=$row['datetime']?></td>
+                            <td>
+                              <?php
+                              if($row['status'] == "Pending"){
+                                ?><span class="badge badge-warning">Pending</span><?php
+                              }elseif($row['status'] == "Rejected"){
+                                ?><span class="badge badge-danger">Rejected</span><?php
+                              }elseif($row['status'] == "Approved"){
+                                ?><span class="badge badge-success">Approved</span><?php
+                              }
+                              ?>
+                            </td>
+                            <td style="text-align:center;">
+                              <input type="hidden" name="order_id" id="order_id" value="<?php echo $row['order_id']; ?>">
+                              <a href="#" class="btn btn-primary editBtn" data-id="<?php echo $row->id(); ?>" data-toggle="modal" data-target="#editModal"><i class="fa fa-pencil-alt" style="font-size:14px;" data-toggle="tooltip" title="Edit Status"></i></a>
+                            </td>
+                          </tr>
+                          <?php
+                          }
                         ?>
                       </tbody>
+                      <tfoot>
+                        <tr>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                        </tr>
+                      </tfoot>
                     </table>
                   </div>
                   <!--Table responsive-->

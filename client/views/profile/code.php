@@ -171,6 +171,7 @@ if (isset($_POST['submitReturnBtn'])){
     $orderid = $_POST["return_order_id"];
     $orderNum = $_POST["return_order_no"];
     $reason = $_POST["return_reason"];
+    $cust_id = $_SESSION['client_user_id'];
     $status = "Pending";
     date_default_timezone_set("Asia/Kuala_Lumpur");
     $datetime = date('d M Y H:i:s');
@@ -180,6 +181,7 @@ if (isset($_POST['submitReturnBtn'])){
     $addInfo = [
         'order_id' => $orderid,
         'order_no' => $orderNum,
+        'customer_id' => $cust_id,
         'image_url' => $img,
         'reason' => $reason,
         'datetime' => $datetime,

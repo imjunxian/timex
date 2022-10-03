@@ -56,6 +56,32 @@ if(isset($_POST["submit_Btn"])){
 	}
 }
 
+/*$orderItemDocRef = $db->collection('order_item')->where('order_id', '=', "a57ff79ba4a14faba9d1");
+$row_ordItem = $orderItemDocRef->documents();
+foreach($row_ordItem as $x){
+    print_r($x["product_id"]);
+}*/
 
+$docRef = $db->collection('orders')->orderBy('orderDate', 'DESC');
+$snapshot = $docRef->documents();
+
+foreach($snapshot as $s){
+    $cust_id = $s['customer_id'];
+    $custSnap = $db->collection('customers')->document($cust_id)->snapshot();
+    //echo $s["orderDateTime"];
+    ?>
+    <table>
+        <tbody>
+            <tr>
+                <td><?=$s["order_no"];?></td>
+                <td><?=$custSnap["name"];?></td>
+                <td><?=$s["orderDateTime"];?></td>
+                <td><?=$s["sales"];?></td>
+                <td><?=$s["order_status"];?></td>
+            </tr>
+        </tbody>
+    </table>
+    <?php
+}
 
 ?>

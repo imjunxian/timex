@@ -26,6 +26,7 @@ if(isset($_POST["addBtn"])){
 
 	date_default_timezone_set("Asia/Kuala_Lumpur");
     $datetime = date('d M Y H:i:s');
+	$addDate = date('YmdHis');
 
 	//category array
 	$cat = array();
@@ -70,6 +71,7 @@ if(isset($_POST["addBtn"])){
         'category' => $category,
         'image_url' => $img,
 		'datetime' => $datetime,
+		'date' => $addDate,
 		'stripe_product_id' => $stripe_product_id,
 		'stripe_price_id' => $stripe_price_id,
     ];

@@ -405,7 +405,7 @@ include('../../includes/navbar.php');
 
                         <tbody>
                         <?php
-                          $docRef = $db->collection('orders');
+                          $docRef = $db->collection('orders')->orderBy('orderDate', 'DESC');
                           $snapshot = $docRef->documents();
 
                           if($snapshot == Array()){
@@ -420,44 +420,39 @@ include('../../includes/navbar.php');
                             <?php
                           }else{
                             foreach($snapshot as $row){
-                              $order_id = $row->id();
                               $cust_id = $row['customer_id'];
-                              $orderItemDocRef = $db->collection('order_item')->where('order_id','=',$order_id);
-                              $orderItemSnapshot = $orderItemDocRef->documents();
-                              foreach($orderItemSnapshot as $ordItem){
-                                $custSnap = $db->collection('customers')->document($cust_id)->snapshot();
-                               ?>
-                               <tr>
-                                 <td><?php echo "#".$row['order_no']; ?></td>
-                                 <td><?php echo $row['orderDateTime']; ?> </td>
-                                 <td><?php echo $custSnap['name']; ?></td>
-                                 <td>
-                                   <?php
-                                     if($row['order_status'] == 'Completed'){
-                                       ?>
-                                       <span class="badge badge-success">Completed</span>
-                                       <?php
-                                     }else if($row['order_status'] == 'Pending'){
-                                       ?>
-                                       <span class="badge badge-warning">Pending</span>
-                                       <?php
-                                     }else if($row['order_status'] == 'Delivered'){
-                                       ?>
-                                       <span class="badge badge-info">Delivered</span>
-                                       <?php
-                                     }else if($row['order_status'] == 'Cancelled'){
-                                       ?>
-                                       <span class="badge badge-danger">Cancelled</span>
-                                       <?php
-                                     }
-                                   ?>
-                                 </td>
-                                 <td>
-                                   <a href="../orders/detail.php?id=<?php echo $row->id() ?>" name="vi" class="btn btn-info"><i class="fa fa-eye"></i></a>
-                                 </td>
-                               </tr>
-                               <?php
-                              }
+                              $custSnap = $db->collection('customers')->document($cust_id)->snapshot();
+                              ?>
+                              <tr>
+                                <td><?php echo "#".$row['order_no']; ?></td>
+                                <td><?php echo $row['orderDateTime']; ?> </td>
+                                <td><?php echo $custSnap['name']; ?></td>
+                                <td>
+                                  <?php
+                                    if($row['order_status'] == 'Completed'){
+                                      ?>
+                                      <span class="badge badge-success">Completed</span>
+                                      <?php
+                                    }else if($row['order_status'] == 'Pending'){
+                                      ?>
+                                      <span class="badge badge-warning">Pending</span>
+                                      <?php
+                                    }else if($row['order_status'] == 'Delivered'){
+                                      ?>
+                                      <span class="badge badge-info">Delivered</span>
+                                      <?php
+                                    }else if($row['order_status'] == 'Cancelled'){
+                                      ?>
+                                      <span class="badge badge-danger">Cancelled</span>
+                                      <?php
+                                    }
+                                  ?>
+                                </td>
+                                <td>
+                                  <a href="../orders/detail.php?id=<?php echo $row->id() ?>" name="vi" class="btn btn-info"><i class="fa fa-eye"></i></a>
+                                </td>
+                              </tr>
+                              <?php
                             }
                           }
                         ?>
