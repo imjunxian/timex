@@ -179,10 +179,10 @@ include('../../includes/navbar.php');
             <div class="form-group">
               <label>Status</label>
                 <select class="form-control" name="editStatus" id="editStatus">
-                  <option value="Pending">Pending</option>
-                  <option value="Delivered">Delivered</option>
-                  <option value="Completed">Completed</option>
-                  <option value="Cancelled">Cancelled</option>
+                  <option id="Pending" value="Pending">Pending</option>
+                  <option id="Delivered" value="Delivered">Delivered</option>
+                  <option id="Completed" value="Completed">Completed</option>
+                  <option id="Cancelled" value="Cancelled">Cancelled</option>
                 </select>
             </div>
             <span class="testing"></span>
@@ -216,7 +216,8 @@ include('../../includes/footer.php');
         dataType: "json",
         success: function(data){
             $('#editOrder_id').val(id);
-            $('option[value="'+data.order_status+'"]').prop('selected', true);
+            $('option[id="'+data.order_status+'"]').prop('selected', true);
+
 
             $('#updateBtn').val('.editBtn');
             $('#editForm').modal('show');

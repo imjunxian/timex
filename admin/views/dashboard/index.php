@@ -252,7 +252,7 @@ include('../../includes/navbar.php');
                 </a>
               </li>
               <li class="nav-item">
-                <a href="../orders/index.php?status=Return" class="nav-link">
+                <a href="../returns/index.php?status=Pending" class="nav-link">
                   Return Requests
                   <span class="float-right badge bg-danger">
                   <?php
@@ -712,10 +712,11 @@ include('../../includes/footer.php');
 
 
 <?php
-/*$oMonth = date('M');
-$oYear = date('Y');
-$odate = date('d M Y');
-$query_li = "SELECT sum(sales) AS sumSales , orders.orderDate FROM orders WHERE orderStatus='Completed' AND orderMonth = '$oMonth' AND orderYear = '$oYear' GROUP BY orderDate";
+/*$odate = date('Ymd');
+$orderDocRef = $db->collection('orders')->where('order_status', '=', 'Completed')->where('orderDate', '<=', $odate)->where('orderDate', '>=', $odate);
+$orderSnapshot = $orderDocRef->documents();
+$sumSales = 0;*/
+/*$query_li = "SELECT sum(sales) AS sumSales , orders.orderDate FROM orders WHERE orderStatus='Completed' AND orderMonth = '$oMonth' AND orderYear = '$oYear' GROUP BY orderDate";
 $query_li_run = mysqli_query($connection, $query_li);*/
 ?>
 
@@ -740,11 +741,13 @@ var chart = am4core.create("linediv", am4charts.XYChart);
 // Add data
 chart.data = [
   <?php
-    /*while($row_li = mysqli_fetch_assoc($query_li_run)){
+    /*foreach($orderSnapshot as $ord){
+      $orderDate = date('d M Y', strtotime($ord['orderDate']));
+      $sumSales += $ord['sales'];
       echo '
       {
-        "date": "'.$row_li["orderDate"].'",
-        "value": "RM '.number_format($row_li["sumSales"],2).'",
+        "date": "'.$orderDate.'",
+        "value": "RM '.number_format($sumSales,2).'",
         "lineColor": chart.colors.next(),
       },
     ';

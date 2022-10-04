@@ -61,8 +61,20 @@ $row_ordItem = $orderItemDocRef->documents();
 foreach($row_ordItem as $x){
     print_r($x["product_id"]);
 }*/
-
-$docRef = $db->collection('orders')->orderBy('orderDate', 'DESC');
+/*$odate = "20221003";
+$orderDocRef = $db->collection('orders')->where('orderDate', '>=', $odate);
+$orderSnapshot = $orderDocRef->documents();
+$sumSales = 0;
+foreach($orderSnapshot as $ord){
+    echo $orderDate = date('d M Y', strtotime($ord['orderDate']));
+    echo "<br>";
+    $sumSales += $ord['sales'];
+    echo $sumSales;
+    echo "<br>";
+    echo $odate;
+    echo "<br>";
+}*/
+/*$docRef = $db->collection('orders')->orderBy('orderDate', 'DESC');
 $snapshot = $docRef->documents();
 
 foreach($snapshot as $s){
@@ -82,6 +94,6 @@ foreach($snapshot as $s){
         </tbody>
     </table>
     <?php
-}
+}*/
 
 ?>
