@@ -372,7 +372,7 @@ include('../../includes/navbar.php');
           </div>
           <form action="code.php" method="POST" id="returnForm" enctype="multipart/form-data">
             <div class="modal-body">
-              <p class="text-danger">* Note: You're only allowed to return you products within 7 days.</p>
+              <p class="text-danger">* Note: You're only allowed to return you products within 7 days. For details, please visit our <b><a href="../policy/return_policy.php" target="_blank" class="text-danger">Return Policy</a></b>.</p>
               <input type="hidden" value="" id="return_order_id" name="return_order_id" required>
               <input type="hidden" value="" id="return_order_no" name="return_order_no" required>
               <div class="form-group">

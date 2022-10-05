@@ -34,6 +34,7 @@ include('../../includes/navbar.php');
 
 <section class="products section">
   <div class="container">
+
     <div class="bs-callout bs-callout">
         <h4>Information Collected</h4>
         <p class="policy">
@@ -53,6 +54,12 @@ include('../../includes/navbar.php');
             webinar, survey, other communication or you just want to make general contact with us, we will collect information of your contact to fulfill your request.
             In case you wan to unsubscribe, follow the unsubscribe link that appears at the end of each communication or, you may unsubscribe via your account preferences.
         </p>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <img class="img-responsive" src="../client/dist/images/shop/category/img2.jpg">
+        </div>
     </div>
 
     <div class="bs-callout bs-callout">
@@ -98,6 +105,12 @@ include('../../includes/navbar.php');
             If you choose to disable cookies in your browser, our Site can still be used by you
             but your ability to use some of the products and/or services at this site may be affected and full site functionality is not guaranteed.
         </p>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <img class="img-responsive" src="../client/dist/images/shop/category/img3.jpg">
+        </div>
     </div>
 
     <div class="bs-callout bs-callout">
@@ -158,6 +171,12 @@ include('../../includes/navbar.php');
             the Legitimate Interests basis is the appropriate legal basis of data storage and use.
             It is a reasonable and expected use of customer and prospective customer data.
         </p>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <img class="img-responsive" src="../client/dist/images/shop/category/img11.jpg">
+        </div>
     </div>
 
 </div>

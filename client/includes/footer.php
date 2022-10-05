@@ -45,13 +45,13 @@
 							<a href="../shop/">SHOP</a>
 						</li>
 						<li>
-							<a href="../policy/privacy_policy.php">Policy</a>
+							<a href="../policy/privacy_policy.php">Privacy Policy</a>
+						</li>
+						<li>
+							<a href="../policy/return_policy.php">Return Policy</a>
 						</li>
 						<li>
 							<a href="../auth/signup.php">Create Account</a>
-						</li>
-						<li>
-							<a href="../admin/views/auth/">Admin Login</a>
 						</li>
 					</ul>
 					<p class="copyright-text">Copyright &copy; <?= strtoupper($docRefInfo['name']) ?> <?php echo date('Y') ?>. All rights reserved.</p>
