@@ -44,7 +44,7 @@ include('../../includes/navbar.php');
 
     <div class="row">
         <div class="col-md-12">
-            <img class="img-responsive" src="../client/dist/images/shop/category/img6.jpg">
+            <img class="img-responsive" src="../client/dist/images/shop/category/img16.jpg">
         </div>
     </div>
 

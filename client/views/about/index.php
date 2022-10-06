@@ -84,7 +84,8 @@ include('../../includes/navbar.php');
         </p>
         <p class="text-justify">
         <?= strtoupper($docRefInfo['name']) ?> comes up with new watch collections every now and then, providing you more choices to choose from.
-        <br>
+        </p>
+        <p class="text-justify">
         We hope <?= strtoupper($docRefInfo['name']) ?> will be part of your life’s journey in reaching your biggest dreams.
         </p>
         <a href="../shop/" class="btn btn-main btn-round mt-20" style="margin-bottom:3em;">Shop Now</a>

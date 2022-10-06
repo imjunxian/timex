@@ -54,10 +54,12 @@
 							<a href="../auth/signup.php">Create Account</a>
 						</li>
 					</ul>
+					<hr>
 					<p class="copyright-text">Copyright &copy; <?= strtoupper($docRefInfo['name']) ?> <?php echo date('Y') ?>. All rights reserved.</p>
 				</div>
 			</div>
 		</div>
 	</footer>
+
 </body>
 </html>

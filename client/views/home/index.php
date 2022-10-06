@@ -17,7 +17,7 @@ include('../../includes/navbar.php');
       </div>
     </div>
   </div>
-  <div class="slider-item th-fullpage hero-area" style="background-image: url('../client/dist/images/slider/slider1.jpg');">
+  <div class="slider-item th-fullpage hero-area" style="background-image: url('../client/dist/images/slider/img5.jpg');">
     <div class="container">
       <div class="row">
         <div class="col-lg-8 text-left">
@@ -28,7 +28,7 @@ include('../../includes/navbar.php');
       </div>
     </div>
   </div>
-  <div class="slider-item th-fullpage hero-area" style="background-image: url('../client/dist/images/slider/slider3.jpg');">
+  <div class="slider-item th-fullpage hero-area" style="background-image: url('../client/dist/images/slider/img6.jpg');">
     <div class="container">
       <div class="row">
         <div class="col-lg-8 text-right">
