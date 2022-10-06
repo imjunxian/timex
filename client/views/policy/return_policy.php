@@ -36,7 +36,7 @@ include('../../includes/navbar.php');
   <div class="container">
 
     <div class="bs-callout bs-callout">
-        <h4>Thank you for shopping at Timex!</h4>
+        <h4>Thank you for shopping at <?= strtoupper($docRefInfo['name']) ?>!</h4>
         <p class="policy">
         We offer refund and/or exchange within the first 7 days of your purchase, if 7 days have passed since your purchase, you will not be offered a refund and/or exchange of any kind.
         </p>
