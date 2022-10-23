@@ -72,21 +72,21 @@ include('../../includes/navbar.php');
                   <?php
                   if(isset($_GET["status"])){
                     if($_GET['status'] == "Available"){
-                      $docRef = $db->collection('products')->where('status', '==', 'Active')->where('availability', '==', 'Available');
+                      $docRef = $db->collection('products')->where('status', '==', 'Active')->where('availability', '==', 'Available')->orderBy('date', 'DESC');
                       $snapshot = $docRef->documents();
                     }else if($_GET['status'] == "Unavailable"){
-                      $docRef = $db->collection('products')->where('status', '==', 'Active')->where('availability', '==', 'Unavailable');
+                      $docRef = $db->collection('products')->where('status', '==', 'Active')->where('availability', '==', 'Unavailable')->orderBy('date', 'DESC');
                       $snapshot = $docRef->documents();
                     }else if($_GET['status'] == "StockOut"){
                       $sta = "Active";
-                      $docRef = $db->collection('products')->where('status', '==', 'Active')->where('quantity', '==', "0");
+                      $docRef = $db->collection('products')->where('status', '==', 'Active')->where('quantity', '==', "0")->orderBy('date', 'DESC');
                       $snapshot = $docRef->documents();
                     }else if($_GET['status'] == "LowStock"){
-                      $docRef = $db->collection('products')->where('status', '==', 'Active')->where('quantity', '==', "1");
+                      $docRef = $db->collection('products')->where('status', '==', 'Active')->where('quantity', '==', "1")->orderBy('date', 'DESC');
                       $snapshot = $docRef->documents();
                     }
                   }else{
-                    $docRef = $db->collection('products')->where('status', '==', 'Active');
+                    $docRef = $db->collection('products')->where('status', '==', 'Active')->orderBy('date', 'DESC');
                     $snapshot = $docRef->documents();
                   }
 

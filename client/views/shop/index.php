@@ -185,16 +185,18 @@ include('../../includes/navbar.php');
                 }
               }/*elseif(isset($_GET['sort']) != ""){
                 if(isset($_GET['sort']) == 'price_asc'){
-                  //$docRefProd = $db->collection('products')->where('status', '=', 'Active')->where('availability', '=', 'Available')->orderBy('price', 'asc');
+                  $docRefProd = $db->collection('products')->where('status', '=', 'Active')->where('availability', '=', 'Available');
                   $docRefProd = $db->collection('products')->orderBy('price', 'ASC');
                   $snapshotProd = $docRefProd->documents();
                 }elseif(isset($_GET['sort']) == 'price_desc'){
-                  //$docRefProd = $db->collection('products')->where('status', '=', 'Active')->where('availability', '=', 'Available')->orderBy('price', 'desc');
+                  $docRefProd = $db->collection('products')->where('status', '=', 'Active')->where('availability', '=', 'Available');
                   $docRefProd = $db->collection('products')->orderBy('price', 'DESC');
                   $snapshotProd = $docRefProd->documents();
                 }
               }*/elseif(isset($_GET['search_query']) != ""){
-                $docRefProd = $db->collection('products')->where('status', '=', 'Active')->where('availability', '=', 'Available')->where('name', 'array-contains', $_GET['search_query']);
+                $nameQueryStart = $_GET['search_query'];
+                $nameQueryEnd = $_GET['search_query'].'~';
+                $docRefProd = $db->collection('products')->where('status', '=', 'Active')->where('availability', '=', 'Available')->where('name', '>=', $nameQueryStart)->where('name', '<=', $nameQueryEnd);
                 $snapshotProd = $docRefProd->documents();
               }else{
                 $docRefProd = $db->collection('products')->where('status', '=', 'Active')->where('availability', '=', 'Available');

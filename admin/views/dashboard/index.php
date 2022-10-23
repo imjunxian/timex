@@ -492,7 +492,7 @@ include('../../includes/navbar.php');
                   <div class="table-responsive">
                   <ul class="products-list product-list-in-card pl-2 pr-2">
                     <?php
-                    $docRefProd = $db->collection('products')->where('status', '=', 'Active')->limit(4);
+                    $docRefProd = $db->collection('products')->where('status', '=', 'Active')->orderBy('date', 'DESC')->limit(4);
                     $snapshotProd = $docRefProd->documents();
 
                     foreach($snapshotProd as $row){
