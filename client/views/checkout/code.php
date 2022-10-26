@@ -15,6 +15,7 @@ if(isset($_POST['codBtn'])){
     date_default_timezone_set("Asia/Kuala_Lumpur");
     $orderDateTime = date('d M Y H:i:s');
     $orderDate = date('YmdHis');
+    $orderDay = date('Ymd');
     $paymentMethods = "COD";
     $paymentStatus = "Pending";
     $orderStatus = "Pending";
@@ -27,6 +28,7 @@ if(isset($_POST['codBtn'])){
         'note' => $note,
         'orderDateTime' => $orderDateTime,
         'orderDate' => $orderDate,
+        'orderDay' => $orderDay,
         'order_no' => $orderNo,
         'order_status' => $orderStatus,
 		'payment_method' => $paymentMethods,

@@ -266,7 +266,7 @@ include('../../includes/navbar.php');
                 <h6>ORDER HISTORY</h6>
                 <hr>
                 <?php
-                    $orderDocRef = $db->collection('orders')->where('customer_id','=',$_SESSION['client_user_id']);
+                    $orderDocRef = $db->collection('orders')->where('customer_id','=',$_SESSION['client_user_id'])->orderBy('orderDate', 'DESC');
                     $orderSnapshot = $orderDocRef->documents();
                 ?>
                 <div class="table-responsive">

@@ -99,7 +99,7 @@ include('../../includes/navbar.php');
               <?php
                 $result = 0;
                 $numRow = [];
-                $docValueRef = $db->collection('orders')->where('order_status', '=', 'Completed');
+                $docValueRef = $db->collection('orders');
                 $countDoc = $docValueRef->documents();
                 foreach ($countDoc as $count) {
                   array_push($numRow, $count->data()['order_no']);
@@ -712,10 +712,10 @@ include('../../includes/footer.php');
 
 
 <?php
-/*$odate = date('Ymd');
-$orderDocRef = $db->collection('orders')->where('order_status', '=', 'Completed')->where('orderDate', '<=', $odate)->where('orderDate', '>=', $odate);
+$oMonth = date('Ym');
+$orderDocRef = $db->collection('orders')->where('order_status', '=', 'Completed')->where('orderMonth', '=', $oMonth);
 $orderSnapshot = $orderDocRef->documents();
-$sumSales = 0;*/
+$sumSales = 0;
 /*$query_li = "SELECT sum(sales) AS sumSales , orders.orderDate FROM orders WHERE orderStatus='Completed' AND orderMonth = '$oMonth' AND orderYear = '$oYear' GROUP BY orderDate";
 $query_li_run = mysqli_query($connection, $query_li);*/
 ?>
@@ -741,7 +741,7 @@ var chart = am4core.create("linediv", am4charts.XYChart);
 // Add data
 chart.data = [
   <?php
-    /*foreach($orderSnapshot as $ord){
+    foreach($orderSnapshot as $ord){
       $orderDate = date('d M Y', strtotime($ord['orderDate']));
       $sumSales += $ord['sales'];
       echo '
@@ -751,7 +751,7 @@ chart.data = [
         "lineColor": chart.colors.next(),
       },
     ';
-    }*/
+    }
   ?>
 ];
 

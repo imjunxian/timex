@@ -66,18 +66,9 @@ include('../../includes/navbar.php');
                 <div class="card-body">
                   <div class="table-responsive">
                   <?php
-                     if(isset($_GET["status"])){
-                      if($_GET['status'] == "Pending"){
-                        $docRef = $db->collection('orders')->where('order_status', '=', $_GET['status']);
-                        $snapshot = $docRef->documents();
-                      }else if($_GET['status'] == "Delivered"){
-                        $docRef = $db->collection('orders')->where('order_status', '=', $_GET['status']);
-                        $snapshot = $docRef->documents();
-                      }else if($_GET['status'] == "Completed"){
-                        $docRef = $db->collection('orders')->where('order_status', '=', $_GET['status']);
-                        $snapshot = $docRef->documents();
-                      }else if($_GET['status'] == "Cancelled"){
-                        $docRef = $db->collection('orders')->where('order_status', '=', $_GET['status']);
+                    if(isset($_GET["status"])){
+                      if($_GET['status'] != ""){
+                        $docRef = $db->collection('orders')->where('order_status', '=', $_GET['status'])->orderBy('orderDate', 'DESC');
                         $snapshot = $docRef->documents();
                       }
                     }else{
