@@ -254,7 +254,7 @@ select.form-control {
   </div>
 </section>
 
-<form action="code.php" method="post">
+<form action="" method="">
   <div class="container padding-bottom-3x mb-1">
     <?php
       $docRefCart = $db->collection('carts')->where('customer_id', '=', $_SESSION['client_user_id']);
@@ -319,15 +319,17 @@ select.form-control {
                 <td class="text-center">
                   <div class="count-input">
                     <input id="pquantity" type="hidden" value="<?=$row['quantity']?>" name="pquantity" required>
-                    <input type="number" class="form-control" min=1 max=<?=$row['quantity']?> value="<?=$rowCart['quantity']?>" name="quantity" required>
+                    <input type="hidden" class="form-control" value="<?=$rowCart['quantity']?>" name="quantity" required>
+                    <span class=""><?=$rowCart['quantity']?></span>
                   </div>
                 </td>
                 <td class="text-center text-lg text-medium"><?php echo "RM " . number_format($row['price'],2); ?></td>
                 <td class="text-center text-lg text-medium"><?php echo "RM " . number_format($total_price_per_prod,2); ?></td>
                 <td class="text-center">
-                  <button class="btn btn-primary bg-white btn-md mb-2" type="submit" name="editCart" data-toggle="tooltip" title="Edit Cart">
+                  <!--<button class="btn btn-primary bg-white btn-md mb-2" type="submit" name="editCart" data-toggle="tooltip" title="Edit Cart">-->
+                  <a class="btn btn-primary bg-white btn-md mb-2 editBtn" data-toggle="tooltip" title="Edit Quantity" data-id="<?php echo $rowCart->id(); ?>">
                     <i class="fas fa-pen"></i>
-                  </button>
+                  </a>
                   <a href="#" class="btn btn-danger deleteBtn" data-id="<?php echo $rowCart->id(); ?>" data-toggle="modal" data-target="#deleteModal"><i class="fa fa-trash" data-toggle="tooltip" title="Remove Cart"></i></a>
                 </td>
               </tr>
@@ -394,6 +396,33 @@ select.form-control {
   </div>
 </div>
 
+<!-- Edit Quantity Modal-->
+<div class="modal fade" id="editForm" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title pull-left" id="exampleModalLabel">Edit Quantity</h5>
+          <button class="close pull-right" type="button" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+        <form action="code.php" method="POST">
+          <div class="modal-body">
+            <input type="hidden" name="cartid" id="cartid" value="" />
+            <div class="form-group">
+              <label for="contact">Quantity</label>
+              <input type="number" class="form-control" id="prodQuantity" placeholder="Quantity" name="prodQuantity" min=1 required>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-secondary pull-left" type="button" data-dismiss="modal">Cancel</button>
+            <button type="submit" name="updateBtn" class="btn btn-primary pull-right">Update</button>
+          </div>
+        </form>
+    </div>
+  </div>
+</div>
+
 <!--<section class="empty-cart page-wrapper">
   <div class="container">
     <div class="row">
@@ -437,4 +466,27 @@ include('../../includes/footer.php');
     var longLine = $('#product-title').text();
     $('product-title').text(longLine.slice(0,30) + '\n' + longLine.slice(100));
   });
+
+  //AJAX for get data in modal
+  $(document).ready(function(){
+      $('.editBtn').on('click', function(){
+          var cartId = $(this).attr("data-id");
+          $.ajax({
+              url:"code.php",
+              type:"POST",
+              data:{cartId:cartId},
+              dataType: "json",
+              success: function(data){
+                  $('#cartid').val(cartId);
+                  $('#prodQuantity').val(data.quantity);
+
+                  $('#updateBtn').val('.editBtn');
+                  $('#editForm').modal('show');
+              },
+              error: function (data) {
+                  alert("Something went wrong");
+              },
+          });
+      });
+    });
 </script>

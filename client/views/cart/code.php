@@ -62,4 +62,51 @@ if(isset($_POST['recycleBtn'])){
     }
 }
 
+
+//AJAX
+if(isset($_POST["cartId"])){
+
+	$id = $_POST['cartId'];
+
+	$getData = $db->collection('carts')->document($id)->snapshot();
+
+	if ($getData->exists()) {
+		echo json_encode($getData->data());
+	}
+}
+
+if(isset($_POST['updateBtn'])){
+    $id = $_POST['cartid'];
+    $quantity = $_POST['prodQuantity'];
+    $updateInfo = [
+        'quantity' => $quantity,
+    ];
+
+    $queryDoc = $db->collection('carts');
+
+    try {
+        if($quantity == 0){
+            $_SESSION['danger'] = 'Your Product in cart cannot be 0.';
+            header('Location: ../cart/');
+            exit();
+        }else{
+            $update = $queryDoc->document($id)->set($updateInfo, ['merge' => true]);
+	        if($update){
+	            $_SESSION['success'] = 'Your Cart is Updated Successfully.';
+	            header('Location: ../cart/');
+	            exit();
+	        }else{
+	            $_SESSION['danger'] = 'Update Failed. Please try again.';
+	            header('Location: ../cart/');
+	            exit();
+	        }
+        }
+
+    } catch (Exception $e) {
+        $_SESSION['danger'] = 'Something went wrong. Please try again.';
+        header('Location: ../cart/');
+        exit();
+    }
+}
+
 ?>
