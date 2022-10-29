@@ -99,7 +99,7 @@ include('../../includes/navbar.php');
               <?php
                 $result = 0;
                 $numRow = [];
-                $docValueRef = $db->collection('orders');
+                $docValueRef = $db->collection('orders')->where('order_status', '==', 'Completed');
                 $countDoc = $docValueRef->documents();
                 foreach ($countDoc as $count) {
                   array_push($numRow, $count->data()['order_no']);

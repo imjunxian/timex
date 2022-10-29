@@ -192,7 +192,7 @@ include('../../includes/navbar.php');
               <span>Quantity:</span>
               <div class="product-quantity-slider">
                 <input id="quantity" type="hidden" value="<?=$row['quantity']?>" name="quantity" required>
-                <input id="product-quantity" type="text" value="1" name="product-quantity" required>
+                <input id="product-quantity" type="number" min='1' max='<?=$row['quantity']?>' value="1" name="product-quantity" required>
               </div>
             </div>
             <div class="mt-20">
