@@ -1,9 +1,22 @@
 <?php
-include('../../database/dbconfig.php');
-$title = "Orders";
+include '../../database/security.php';
+$title = "Order";
 include('../../includes/header.php');
-include('../../includes/navbar.php');
+//include('../../includes/navbar.php');
 ?>
+
+<style>
+.img-thumbnail-table{
+  padding: 0.25rem;
+  background-color: #fff;
+  border: 1px solid #dee2e6;
+  border-radius: 0.25rem;
+  height: auto;
+  width: 100px;
+  height: 100px;
+  object-fit: fill;
+}
+</style>
 
 <?php
 if(isset($_GET["id"])){
@@ -12,42 +25,16 @@ if(isset($_GET["id"])){
     $docRef = $db->collection('orders');
     $row = $docRef->document($oids)->snapshot();
 
-    if($row->exists()){
+    if($row -> exists()){
     ?>
     <!-- Content Wrapper. Contains page content -->
-    <div class="content-wrapper">
-        <!-- Content Header (Page header) -->
-        <div class="content-header">
-            <div class="container-fluid">
-                <div class="row mb-2">
-                <div class="col-sm-6">
-                    <h1 class="m-0">Order Details</h1>
-                </div><!-- /.col -->
-                <div class="col-sm-6">
-                    <ol class="breadcrumb float-sm-right">
-                    <li class="breadcrumb-item"><a href="../dashboard/">Home</a></li>
-                    <li class="breadcrumb-item">Orders</li>
-                    <li class="breadcrumb-item active">Order Details</li>
-                    </ol>
-                </div><!-- /.col -->
-                </div><!-- /.row -->
-            </div><!-- /.container-fluid -->
-        </div>
-        <!-- /.content-header -->
+    <div class="container">
+
 
         <!-- Main content -->
         <section class="content">
         <div class="container-fluid">
-            <div class="row">
-                <div class="col-12">
-                    <div class="card">
-                        <div class="card-body">
-                        <a href="javascript:history.go(-1)" class="btn btn-secondary">Back</a>
-                        <!--<a href="../orders/print.php?id=<?php echo $row->id();?>" class="btn btn-dark"><i class="fa fa-print"></i> Print</a>-->
-                        </div>
-                    </div>
-                </div>
-            </div>
+
             <div class="row">
                 <div class="col-md-12">
                         <form action="code.php" id="addF" method="POST">
@@ -116,6 +103,8 @@ if(isset($_GET["id"])){
                                 <?php
                                 $orderItemDocRef = $db->collection('order_item')->where('order_id', '=', $oids);
                                 $row_ordItem = $orderItemDocRef->documents();
+                                $result = 0;
+                                $numRow = [];
                                 ?>
                                 <div class="col-12 table-responsive">
                                     <table class="table table-striped table-hover">
@@ -143,7 +132,7 @@ if(isset($_GET["id"])){
                                                 foreach($prodDoc as $rowProd){
                                                 ?>
                                                 <tr>
-                                                    <td><?php echo '<img src="../../dist/img/productImage/'.$rowProd['image_url'].'" class="img-thumbnail-table" alt="'.$rowProd["name"].'" title="'.$rowProd["name"].'"/>'; ?></td>
+                                                    <td><?php echo '<img src="../../../../timex/admin/dist/img/productImage/'.$rowProd['image_url'].'" class="img-thumbnail-table" alt="'.$rowProd["name"].'" title="'.$rowProd["name"].'"/>'; ?></td>
                                                     <td><?=$rowProd["sku"]?></td>
                                                     <td><?=$rowProd["name"]?></td>
                                                     <td><?= $oi_qtt[$i] ?></td>
@@ -204,19 +193,19 @@ if(isset($_GET["id"])){
                                             <?php
                                                 if($row['order_status'] == 'Completed'){
                                                 ?>
-                                                    <span class="badge badge-success" style="font-size:14px;">Completed</span>
+                                                    <span class="label label-success" style="font-size:14px;">Completed</span>
                                                 <?php
                                                 }else if($row['order_status'] == 'Pending'){
                                                 ?>
-                                                    <span class="badge badge-warning" style="font-size:14px;">Pending</span>
+                                                    <span class="label label-warning" style="font-size:14px;">Pending</span>
                                                 <?php
                                                 }else if($row['order_status'] == 'Cancelled'){
                                                 ?>
-                                                    <span class="badge badge-danger" style="font-size:14px;">Cancelled</span>
+                                                    <span class="label label-danger" style="font-size:14px;">Cancelled</span>
                                                 <?php
                                                 }else if($row['order_status'] == 'Delivered'){
                                                     ?>
-                                                        <span class="badge badge-info" style="font-size:14px;">Delivered</span>
+                                                        <span class="label label-info" style="font-size:14px;">Delivered</span>
                                                     <?php
                                                 }
                                             ?>
@@ -252,7 +241,7 @@ if(isset($_GET["id"])){
     <?php
     }else{
         ?>
-        <script> location.replace("../orders/index.php?idnotfound"); </script>
+        <script> location.replace("../profile/"); </script>
         <?php
     } // end else
 } //end if GET
@@ -267,5 +256,4 @@ if(isset($_GET["id"])){
 
 <?php
 include('../../includes/script.php');
-include('../../includes/footer.php');
 ?>

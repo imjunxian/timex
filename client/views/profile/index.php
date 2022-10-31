@@ -306,7 +306,8 @@ include('../../includes/navbar.php');
                               ?>
                             </td>
                             <td>
-                              <a href="#" name="view" class="btn btn-info viewBtn" data-toggle="modal" data-target="#detailModal" data-id="<?=$order_id?>"><i class="fa fa-eye"></i></a>
+                              <!--<a href="#" name="view" class="btn btn-info viewBtn" data-toggle="modal" data-target="#detailModal" data-id="<?=$order_id?>"><i class="fa fa-eye"></i></a>-->
+                              <a href="../profile/detail.php?id=<?=$order_id?>" name="view" class="btn btn-info"><i class="fa fa-eye"></i></a>
                               <a href="#" name="return" class="btn btn-danger returnBtn" data-toggle="modal" data-target="#returnModal" data-id="<?=$order_id?>"><i class="fa fa-exchange-alt"></i></a>
                               <input type="hidden" name="order_number" class="order_number" id="order_number" value="<?=$ord['order_no']?>" required>
                             </td>
