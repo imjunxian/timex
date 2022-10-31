@@ -177,7 +177,7 @@ include('../../includes/navbar.php');
                             </div>
                             <div class="card-details mt-10">
                             <p class="text-danger text-justify">* After clicking on the button, you will be directed to a secure gateway for payment. You will be redirected back to the website after completing the payment process.</p>
-                                <button type="submit" class="btn btn-primary btn-round" name="stripeBtn">Pay by Card</button>
+                                <button type="submit" class="btn btn-primary btn-round" name="stripeBtn_demo">Pay by Card</button>
                             </div>
                             <!--<div class="card-details mt-10">
                                 <button type="submit" class="btn btn-primary btn-round" name="paypalBtn">Payment with Paypal</button>
