@@ -5,6 +5,13 @@ include('../../includes/header.php');
 include('../../includes/navbar.php');
 ?>
 
+<style>
+  .btn-stripe {
+    color: #fff;
+    background-color: #6B71E3;
+  }
+</style>
+
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
@@ -212,7 +219,7 @@ include('../../includes/navbar.php');
             </form>
             <div class="card-footer">
                 <a class="btn btn-secondary" href="../recycle/products.php">Recycle Bin</a>
-                <a class="btn btn-dark float-right" href="https://dashboard.stripe.com/test/products?active=true" target="_blank">Stripe Dashboard</a>
+                <a class="btn btn-stripe float-right" href="https://dashboard.stripe.com/test/products?active=true" target="_blank">Stripe Dashboard</a>
             </div>
           </div>
           <!-- /.card -->
