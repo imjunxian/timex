@@ -65,23 +65,13 @@ include('../../includes/navbar.php');
                 <!-- /.card-header -->
                 <div class="card-body">
                   <div class="table-responsive">
-                  <?php
-                    if(isset($_GET["status"])){
-                      if($_GET['status'] != ""){
-                        $docRef = $db->collection('orders')->where('order_status', '=', $_GET['status'])->orderBy('orderDate', 'DESC');
-                        $snapshot = $docRef->documents();
-                      }
-                    }else{
-                      $docRef = $db->collection('orders')->orderBy('orderDate', 'DESC');
-                      $snapshot = $docRef->documents();
-                    }
-                  ?>
+
                     <table id="dataTable" class="table table-bordered table-striped">
                       <thead>
                         <tr>
                           <th width="13%">#OrderNo</th>
-                          <th>Customer</th>
                           <th>Order DateTime</th>
+                          <th>Customer</th>
                           <th>Sales (RM)</th>
                           <th width="15%">Payment Method</th>
                           <th>Status</th>
@@ -90,14 +80,21 @@ include('../../includes/navbar.php');
                       </thead>
                       <tbody>
                         <?php
+                         if(isset($_GET["status"])){
+                            $docRef = $db->collection('orders')->where('order_status', '=', $_GET['status'])->orderBy('orderDate', 'DESC');
+                            $snapshot = $docRef->documents();
+                         }else{
+                            $docRef = $db->collection('orders')->orderBy('orderDate', 'DESC');
+                            $snapshot = $docRef->documents();
+                         }
                         foreach($snapshot as $row){
                           $cust_id = $row['customer_id'];
                           $custSnap = $db->collection('customers')->document($cust_id)->snapshot();
                           ?>
                           <tr>
                             <td>#<?=$row['order_no']?></td>
-                            <td><?=$custSnap['name']?></td>
                             <td><?=$row['orderDateTime']?></td>
+                            <td><?=$custSnap['name']?></td>
                             <td><?=number_format($row['sales'], 2)?></td>
                             <td><?=$row['payment_method']?></td>
                             <td>
