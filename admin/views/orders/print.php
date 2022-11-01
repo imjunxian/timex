@@ -1,9 +1,21 @@
 <?php
 include('../../database/dbconfig.php');
-$title = "Orders";
+$title = "Print";
 include('../../includes/header.php');
-include('../../includes/navbar.php');
+//include('../../includes/navbar.php');
 ?>
+<style>
+.img-thumbnail-table{
+  padding: 0.25rem;
+  background-color: #fff;
+  border: 1px solid #dee2e6;
+  border-radius: 0.25rem;
+  height: auto;
+  width: 100px;
+  height: 100px;
+  object-fit: fill;
+}
+</style>
 
 <?php
 if(isset($_GET["id"])){
@@ -12,42 +24,16 @@ if(isset($_GET["id"])){
     $docRef = $db->collection('orders');
     $row = $docRef->document($oids)->snapshot();
 
-    if($row->exists()){
+    if($row -> exists()){
     ?>
     <!-- Content Wrapper. Contains page content -->
-    <div class="content-wrapper">
-        <!-- Content Header (Page header) -->
-        <div class="content-header">
-            <div class="container-fluid">
-                <div class="row mb-2">
-                <div class="col-sm-6">
-                    <h1 class="m-0">Order Details</h1>
-                </div><!-- /.col -->
-                <div class="col-sm-6">
-                    <ol class="breadcrumb float-sm-right">
-                    <li class="breadcrumb-item"><a href="../dashboard/">Home</a></li>
-                    <li class="breadcrumb-item">Orders</li>
-                    <li class="breadcrumb-item active">Order Details</li>
-                    </ol>
-                </div><!-- /.col -->
-                </div><!-- /.row -->
-            </div><!-- /.container-fluid -->
-        </div>
-        <!-- /.content-header -->
+    <div class="">
+
 
         <!-- Main content -->
         <section class="content">
         <div class="container-fluid">
-            <div class="row">
-                <div class="col-12">
-                    <div class="card">
-                        <div class="card-body">
-                        <a href="javascript:history.go(-1)" class="btn btn-secondary">Back</a>
-                        <a href="../orders/print.php?id=<?= $row->id() ?>" class="btn btn-dark"><i class="fa fa-print"></i> Print</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
+
             <div class="row">
                 <div class="col-md-12">
                         <form action="code.php" id="addF" method="POST">
@@ -116,6 +102,8 @@ if(isset($_GET["id"])){
                                 <?php
                                 $orderItemDocRef = $db->collection('order_item')->where('order_id', '=', $oids);
                                 $row_ordItem = $orderItemDocRef->documents();
+                                $result = 0;
+                                $numRow = [];
                                 ?>
                                 <div class="col-12 table-responsive">
                                     <table class="table table-striped table-hover">
@@ -143,7 +131,7 @@ if(isset($_GET["id"])){
                                                 foreach($prodDoc as $rowProd){
                                                 ?>
                                                 <tr>
-                                                    <td><?php echo '<img src="../../dist/img/productImage/'.$rowProd['image_url'].'" class="img-thumbnail-table" alt="'.$rowProd["name"].'" title="'.$rowProd["name"].'"/>'; ?></td>
+                                                    <td><?php echo '<img src="../../../../timex/admin/dist/img/productImage/'.$rowProd['image_url'].'" class="img-thumbnail-table" alt="'.$rowProd["name"].'" title="'.$rowProd["name"].'"/>'; ?></td>
                                                     <td><?=$rowProd["sku"]?></td>
                                                     <td><?=$rowProd["name"]?></td>
                                                     <td><?= $oi_qtt[$i] ?></td>
@@ -164,7 +152,7 @@ if(isset($_GET["id"])){
                                 <br>
                                 <div class="row">
                                 <!-- accepted payments column -->
-                                <div class="col-lg-5 col-md-5 col-xs-12" style="margin-top:1%;">
+                                <div class="col-lg-5 col-md-5 col-xs-5" style="margin-top:1%;">
                                     <p class=""><b>Notes:</b></p>
                                     <div class="form-group">
                                         <textarea class="form-control" placeholder="Noted Here" rows=6 name="orderNote" disabled=""><?php echo $row["note"]; ?></textarea>
@@ -175,7 +163,7 @@ if(isset($_GET["id"])){
 
                                     </div>
                                 <!-- /.col -->
-                                <div class="col-lg-6 col-md-12">
+                                <div class="col-lg-6 col-md-6">
                                     <p class="lead"></p>
 
                                     <div class="table-responsive">
@@ -252,7 +240,7 @@ if(isset($_GET["id"])){
     <?php
     }else{
         ?>
-        <script> location.replace("../orders/index.php?idnotfound"); </script>
+        <script> location.replace("../profile/"); </script>
         <?php
     } // end else
 } //end if GET
@@ -264,8 +252,11 @@ if(isset($_GET["id"])){
 </div>
 <!-- /.content-wrapper -->
 
-
 <?php
 include('../../includes/script.php');
-include('../../includes/footer.php');
+//include('../../includes/footer.php');
 ?>
+
+<script type="text/javascript">
+  window.addEventListener("load", window.print());
+</script>

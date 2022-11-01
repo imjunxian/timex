@@ -40,8 +40,8 @@ if(isset($_POST['loginBtn'])){
 							$_SESSION['user_role'] = $snapshot["role"];
 							$_SESSION['success'] = 'Login as '.$_SESSION['user_role'].': '.$_SESSION['user_name'].'';
 							$_SESSION['welcome'] = 'Welcome Back, '.$_SESSION['user_name'].'';
-							//header('Location: ../dashboard/');
-                            header('Location: ../settings/');
+							header('Location: ../dashboard/');
+                            //header('Location: ../settings/');
 							exit();
 						}elseif($status == "Inactive"){
 							$_SESSION['danger'] = 'Access Denied due to Account had been Deactivated';

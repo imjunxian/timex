@@ -153,7 +153,7 @@ if(isset($_GET["id"])){
                                 <br>
                                 <div class="row">
                                 <!-- accepted payments column -->
-                                <div class="col-lg-5 col-md-5 col-xs-12" style="margin-top:1%;">
+                                <div class="col-lg-5 col-md-5 col-xs-5" style="margin-top:1%;">
                                     <p class=""><b>Notes:</b></p>
                                     <div class="form-group">
                                         <textarea class="form-control" placeholder="Noted Here" rows=6 name="orderNote" disabled=""><?php echo $row["note"]; ?></textarea>
@@ -164,7 +164,7 @@ if(isset($_GET["id"])){
 
                                     </div>
                                 <!-- /.col -->
-                                <div class="col-lg-6 col-md-12">
+                                <div class="col-lg-6 col-md-6">
                                     <p class="lead"></p>
 
                                     <div class="table-responsive">

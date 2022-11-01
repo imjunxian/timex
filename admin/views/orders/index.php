@@ -116,6 +116,7 @@ include('../../includes/navbar.php');
                             <td style="text-align:center;">
                               <a href="../orders/detail.php?id=<?=$row->id()?>" name="view" class="btn btn-info"><i class="fa fa-eye"></i></a>
                               <a href="#" class="btn btn-primary editBtn" data-id="<?php echo $row->id(); ?>" data-toggle="modal" data-target="#editModal"><i class="fa fa-pencil-alt" style="font-size:14px;" data-toggle="tooltip" title="Edit Status"></i></a>
+                              <a href="../orders/print.php?id=<?=$row->id()?>" name="printBtn" class="btn btn-secondary" data-toggle="tooltip" title="Print <?php echo '#$row["order_no"]'; ?>"><i class="fa fa-print" style="font-size:14px;"></i></a>
                             </td>
                           </tr>
                           <?php
