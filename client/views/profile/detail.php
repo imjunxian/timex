@@ -28,7 +28,7 @@ if(isset($_GET["id"])){
     if($row -> exists()){
     ?>
     <!-- Content Wrapper. Contains page content -->
-    <div class="container">
+    <div class="">
 
 
         <!-- Main content -->
