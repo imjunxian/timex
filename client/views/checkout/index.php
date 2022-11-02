@@ -47,6 +47,7 @@ include('../../includes/navbar.php');
                           $subcost += $total_cost_per_prod;
 
                           $quantityDB = $row['quantity'];
+                          $latestQtt = $quantityDB - $rowCart['quantity'];
                           ?>
                           <div class="media product-card">
                             <span class="pull-left">
@@ -60,6 +61,7 @@ include('../../includes/navbar.php');
                                 <input type="hidden" value="<?=$total_price_per_prod?>" name="sumProductPrice[]" id="sumProductPrice" required>
                                 <input type="hidden" value="<?=$row['price']?>" name="productPrice[]" id="productPrice" required>
                                 <input type="hidden" value="<?=$quantityDB?>" name="quantityDB[]" id="quantityDB" required>
+                                <input type="hidden" value="<?=$latestQtt?>" name="quantityUpdate[]" id="quantityUpdate" required>
                                 <h4 class="media-heading"><?=$row['name']?></h4>
                                 <p class="price"><?=$rowCart['quantity']?> x <?php echo "RM " . number_format($row['price'],2); ?></p>
                             </div>

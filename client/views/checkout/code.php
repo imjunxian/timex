@@ -23,6 +23,8 @@ if(isset($_POST['codBtn'])){
 
     $address = $_POST['address'];
 
+    $count =  $_POST['countInput'];
+
     $addInfo = [
         'customer_id'=> $customer_id,
         'note' => $note,
@@ -79,6 +81,7 @@ if(isset($_POST['codBtn'])){
                     $productPrice = $_POST['productPrice'];
                     $sumProductPrice = $_POST['sumProductPrice'];
                     $quantityDB = $_POST['quantityDB'];
+                    //$latestQuantity = $_POST['quantityUpdate'];
 
                     /*$product_id = $_POST['product_id'][$x];
                     $stripe_product_id = $_POST['stripe_product_id'][$x];
@@ -98,11 +101,12 @@ if(isset($_POST['codBtn'])){
                     $addOrderItem = $orderItemQueryDoc->add($addItemInfo);
 
                     //update product quantity in database after checkout
-                    /*$latestQuantity = $quantityDB - $orderQtt;
-                    $updateQuantity = [
-                        'quantity' => $latestQuantity,
-                    ];
-                    $updateQtt = $productQueryDoc->document($product_id)->set($updateQuantity, ['merge'=>true]);*/
+                    /*for($x = 0; $x < $count; $x++){
+                        $updateQuantity = [
+                            'quantity' => $latestQuantity,
+                        ];
+                        $updateQtt = $productQueryDoc->document($product_id)->set($updateQuantity, ['merge'=>true]);
+                    }*/
 
                     $clientCart = $cartQueryDoc->where("customer_id", "=", $customer_id)->documents();
                     foreach($clientCart as $cc){
