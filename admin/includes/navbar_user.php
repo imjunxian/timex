@@ -287,7 +287,7 @@
                 <a href="#" class="nav-link">
                   <i class="nav-icon fa fa-chart-bar"></i>
                   <p>
-                    Sales & Profits
+                    Reports
                     <i class="fas fa-angle-left right"></i>
                   </p>
                 </a>
@@ -298,23 +298,6 @@
                       <p>Sales Report</p>
                     </a>
                   </li>
-
-
-                  <li class="nav-item">
-                    <a href="../reports/summarySales.php" class="nav-link">
-                      <i class="far fa-circle nav-icon"></i>
-                      <p>Summary Sales Report</p>
-                    </a>
-                  </li>
-
-
-                  <li class="nav-item">
-                    <a href="../reports/summaryProfit.php" class="nav-link">
-                      <i class="far fa-circle nav-icon"></i>
-                      <p>Summary Profit Report</p>
-                    </a>
-                  </li>
-
                 </ul>
               </li>
 
