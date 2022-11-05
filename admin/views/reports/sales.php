@@ -116,7 +116,7 @@ include('../../includes/navbar.php');
                                     }
                                 ?>
                           </tbody>
-                          <!--<tfoot>
+                          <tfoot>
                             <?php
                                 if(isset($_POST['submit_Btn'])){
                                     $start = date_create($_POST["sDate"]);
@@ -125,7 +125,7 @@ include('../../includes/navbar.php');
                                     $endD = date_format($end, "Ymd");
 
                                     $query_sum_cal = $db->collection('orders')->where('order_status', '=', 'Completed')->where('orderDay', '>=', $startD)->where('orderDay', '<=', $endD)->orderBy('orderDay', 'DESC');
-                                    $query_sum_cal_run = $query_sum->documents();
+                                    $query_sum_cal_run = $query_sum_cal->documents();
 
                                     $sales = 0;
                                     $profits = 0;
@@ -133,17 +133,17 @@ include('../../includes/navbar.php');
                                     foreach($query_sum_cal_run as $row_cal){
                                         $sales += $row_cal['sales'];
                                         $profits += $row_cal['profits'];
-                                        ?>
-                                        <tr>
-                                            <th colspan="5" style="text-align:right;">Total : </th>
-                                            <th>RM <?php echo number_format($sales,2); ?></th>
-                                            <th>RM <?php echo number_format($profits,2); ?></th>
-                                        </tr>
-                                        <?php
                                     }
+                                    ?>
+                                    <tr>
+                                        <th colspan="5" style="text-align:right;">Total : </th>
+                                        <th>RM <?php echo number_format($sales,2); ?></th>
+                                        <th>RM <?php echo number_format($profits,2); ?></th>
+                                    </tr>
+                                    <?php
                                 }
                             ?>
-                          </tfoot>-->
+                          </tfoot>
                         </table>
                       </div>
                       <!--Table responsive-->

@@ -16,6 +16,7 @@ if(isset($_POST['codBtn'])){
     $orderDateTime = date('d M Y H:i:s');
     $orderDate = date('YmdHis');
     $orderDay = date('Ymd');
+    $orderMonth = date('Ym');
     $paymentMethods = "COD";
     $paymentStatus = "Pending";
     $orderStatus = "Pending";
@@ -30,6 +31,7 @@ if(isset($_POST['codBtn'])){
         'note' => $note,
         'orderDateTime' => $orderDateTime,
         'orderDate' => $orderDate,
+        'orderMonth' => $orderMonth,
         'orderDay' => $orderDay,
         'order_no' => $orderNo,
         'order_status' => $orderStatus,

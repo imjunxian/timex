@@ -638,18 +638,18 @@ include('../../includes/navbar.php');
                 </div>
               </div>
                 <?php
-                /*$date = date('d M Y');
-                $query = "SELECT sum(sales) as sales, sum(profit) as profit, sum(subcost) as cost FROM orders WHERE orderStatus='Completed' AND orderDate = '$date'";
-                $query_run = mysqli_query($connection, $query);
+                $todayDate = date('Ymd');
+                $doc_today = $db->collection('orders')->where('order_status', '=', 'Completed')->where('orderDay', '=', $todayDate);
+                $doc_todayInfo = $doc_today->documents();
 
-                while($row = mysqli_fetch_assoc($query_run)){*/
+                foreach($doc_todayInfo as $ti){
                   ?>
                   <div class="card-footer">
                   <div class="row">
                     <div class="col-sm-4 col-6">
                       <div class="description-block border-right">
                         <!--<span class="description-percentage text-success"><i class="fas fa-caret-up"></i> 0%</span>-->
-                        <h5 class="description-header">RM <?php //echo number_format($row["sales"],2); ?></h5>
+                        <h5 class="description-header">RM <?= number_format($ti["sales"],2); ?></h5>
                         <span class="description-text">TODAY SALES</span>
                       </div>
                       <!-- /.description-block -->
@@ -659,7 +659,7 @@ include('../../includes/navbar.php');
                     <div class="col-sm-4 col-6">
                       <div class="description-block border-right">
                         <!--<span class="description-percentage text-success"><i class="fas fa-caret-up"></i> 0%</span>-->
-                        <h5 class="description-header">RM <?php //echo number_format($row["cost"],2); ?></h5>
+                        <h5 class="description-header">RM <?= number_format($ti["subcost"],2); ?></h5>
                         <span class="description-text">SALES COST</span>
                       </div>
                       <!-- /.description-block -->
@@ -670,7 +670,7 @@ include('../../includes/navbar.php');
                     <div class="col-sm-4 col-6">
                       <div class="description-block border-right">
                         <!--<span class="description-percentage text-success"><i class="fas fa-caret-up"></i> 20%</span>-->
-                       <h5 class="description-header">RM <?php //echo number_format($row["profit"],2); ?></h5>
+                       <h5 class="description-header">RM <?= number_format($ti["profits"],2); ?></h5>
                         <span class="description-text">TODAY PROFIT</span>
                       </div>
                       <!-- /.description-block -->
@@ -690,7 +690,7 @@ include('../../includes/navbar.php');
         <!-- /.row -->
 
       <?php
-    //}
+    }
     ?>
 
   </section>
@@ -742,7 +742,8 @@ var chart = am4core.create("linediv", am4charts.XYChart);
 chart.data = [
   <?php
     foreach($orderSnapshot as $ord){
-      $orderDate = date('d M Y', strtotime($ord['orderDate']));
+      //$orderDate = date('d M Y', strtotime($ord['orderDate']));
+      $orderDate = date_format(date_create($ord['orderDate']), "d M Y");
       $sumSales += $ord['sales'];
       echo '
       {
@@ -750,7 +751,7 @@ chart.data = [
         "value": "RM '.number_format($sumSales,2).'",
         "lineColor": chart.colors.next(),
       },
-    ';
+      ';
     }
   ?>
 ];
