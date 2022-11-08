@@ -66,6 +66,16 @@ if(isset($_GET['checkout']) == 'success' && !empty($_GET['session_id'])){
       foreach($clientCart as $cc){
           $deleteCart = $cartQueryDoc->document($cc->id())->delete();
       }
+
+      $i=-1;
+      foreach($_SESSION['o'] as $pid){
+          $i++;
+          $updateQuantity = [
+              'quantity' => $_SESSION['t'][$i],
+          ];
+          $updateQtt = $productQueryDoc->document($pid)->set($updateQuantity, ['merge'=>true]);
+      }
+
     }
   }
 

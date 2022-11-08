@@ -83,7 +83,7 @@ if(isset($_POST['codBtn'])){
                     $productPrice = $_POST['productPrice'];
                     $sumProductPrice = $_POST['sumProductPrice'];
                     $quantityDB = $_POST['quantityDB'];
-                    //$latestQuantity = $_POST['quantityUpdate'];
+                    $latestQuantity = $_POST['quantityUpdate'];
 
                     /*$product_id = $_POST['product_id'][$x];
                     $stripe_product_id = $_POST['stripe_product_id'][$x];
@@ -103,18 +103,18 @@ if(isset($_POST['codBtn'])){
                     $addOrderItem = $orderItemQueryDoc->add($addItemInfo);
 
                     //update product quantity in database after checkout
-                    /*for($x = 0; $x < $count; $x++){
+                    $i=-1;
+                    foreach($product_id as $pid){
+                        $i++;
                         $updateQuantity = [
-                            'quantity' => $latestQuantity,
+                            'quantity' => $latestQuantity[$i],
                         ];
-                        $updateQtt = $productQueryDoc->document($product_id)->set($updateQuantity, ['merge'=>true]);
-                    }*/
+                        $updateQtt = $productQueryDoc->document($pid)->set($updateQuantity, ['merge'=>true]);
+                    }
 
                     $clientCart = $cartQueryDoc->where("customer_id", "=", $customer_id)->documents();
                     foreach($clientCart as $cc){
-                        //delete cart after checkout
                         $deleteCart = $cartQueryDoc->document($cc->id())->delete();
-                        //$deleteCart = $cartQueryDoc->document($x->id())->delete();
                     }
 
                     if($addOrderItem){
@@ -190,14 +190,14 @@ if(isset($_POST['stripeBtn'])){
     $orderQtt = $_POST['orderQtt'];
     $productPrice = $_POST['productPrice'];
     $sumProductPrice = $_POST['sumProductPrice'];
-    $quantityDB = $_POST['quantityDB'];
+    $latestQuantity = $_POST['quantityUpdate'];
 
     $_SESSION['o'] = $product_id;
     $_SESSION['p'] = $stripe_product_id;
     $_SESSION['q'] = $orderQtt;
     $_SESSION['r'] = $productPrice;
     $_SESSION['s'] = $sumProductPrice;
-    $_SESSION['t'] = $quantityDB;
+    $_SESSION['t'] = $latestQuantity;
 
     $addInfo = [
         'customer_id'=> $customer_id,
