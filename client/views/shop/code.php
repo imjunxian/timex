@@ -214,6 +214,7 @@ if(isset($_POST['addToCart'])){
 	$cust_id = $_SESSION['client_user_id'];
 	$prod_id = $_POST['productIdOverview'];
 	$stripe_prod = $_POST['stripe_id'];
+	$stripe_price = $_POST['stripe_price'];
 	$quantity = $_POST['product-quantity'];
 	date_default_timezone_set("Asia/Kuala_Lumpur");
     $dateTime = date('d M Y H:i:s');
@@ -226,6 +227,7 @@ if(isset($_POST['addToCart'])){
         'added_from' => $dateTime,
 		'quantity' => $quantity,
 		'stripe_product_id' => $stripe_prod,
+		'stripe_price_id' => $stripe_price,
     ];
     $queryDoc = $db->collection('carts');
 

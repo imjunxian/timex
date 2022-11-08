@@ -182,6 +182,8 @@ if(isset($_GET["id"])){
                                             <?php
                                                 if($row["payment_method"] == "COD"){
                                                     echo "<span>Cash on Delivery (COD)</span>";
+                                                }elseif($row["payment_method"] == "Card"){
+                                                    echo "<span>Card</span>";
                                                 }
                                             ?>
                                         </td>

@@ -5,6 +5,13 @@ include('../../includes/header.php');
 include('../../includes/navbar.php');
 ?>
 
+<style>
+  .btn-stripe {
+    color: #fff;
+    background-color: #6B71E3;
+  }
+</style>
+
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
@@ -137,6 +144,9 @@ include('../../includes/navbar.php');
                 </div>
                 <!-- /.card-body -->
               </form>
+              <div class="card-footer">
+                <a class="btn btn-stripe float-right" href="https://dashboard.stripe.com/test/payments?status[0]=successful" target="_blank">Stripe Dashboard</a>
+            </div>
             </div>
             <!-- /.card -->
           </div>

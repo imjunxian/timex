@@ -4,6 +4,7 @@ require __DIR__.'/vendor/autoload.php';
 use Google\Cloud\Firestore\FirestoreClient;
 use Stripe\Stripe;
 use Stripe\StripeClient;
+use Stripe\Checkout\Session;
 
 session_start();
 
