@@ -214,7 +214,7 @@ if(isset($_GET['checkout']) == 'success' && !empty($_GET['session_id'])){
                         <i class="tf-ion-android-checkmark-circle"></i>
                         <h2 class="text-center">Thank you! For Choosing Us.</h2>
                         <p>Your order has been placed! You'll receive your items soon.</p>
-                        <a href="../shop/" class="btn btn-main mt-20">Continue Shopping</a>
+                        <a href="../home/" class="btn btn-main mt-20">Return Home</a>
                     </div>
                 </div>
             </div>
