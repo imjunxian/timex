@@ -405,7 +405,7 @@ include('../../includes/navbar.php');
 
                         <tbody>
                         <?php
-                          $docRef = $db->collection('orders')->orderBy('orderDate', 'DESC');
+                          $docRef = $db->collection('orders')->orderBy('orderDate', 'DESC')->limit(5);
                           $snapshot = $docRef->documents();
 
                           if($snapshot == Array()){
