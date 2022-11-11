@@ -235,7 +235,21 @@ if(isset($_POST['stripeBtn'])){
                 ];
                 array_push($line_items, $line_item);
             }
+            $shipDoc = $db->collection('company')->document('Qwh7lii8yRbpD62j6u1R')->snapshot();
+            $fee = $shipDoc['shipping_fee'];
             $checkout_session = Stripe\Checkout\Session::create([
+                /*'shipping_options' => [
+                    [
+                      'shipping_rate_data' => [
+                        'fixed_amount' => ['amount' => $fee , 'currency' => 'myr'],
+                        'display_name' => 'Shipping Fee',
+                        'delivery_estimate' => [
+                          'minimum' => ['unit' => 'business_day', 'value' => 5],
+                          'maximum' => ['unit' => 'business_day', 'value' => 7],
+                        ],
+                      ],
+                    ],
+                  ],*/
                 'line_items' => $line_items,
                 'mode' => 'payment',
                 'success_url' => 'http://localhost/timex/checkout/success.php?checkout=success&session_id={CHECKOUT_SESSION_ID}',
