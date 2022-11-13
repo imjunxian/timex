@@ -12,10 +12,16 @@
         </li>
 
         <li class="nav-item">
-          <a href="javascript:void(0)" class="nav-link"><i class="fa fa-clock"></i> <?php date_default_timezone_set("Asia/Kuala_Lumpur"); echo date('D, M d, h:ia'); ?></a>
+          <a href="javascript:void(0)" class="nav-link">
+            <i class="fa fa-clock"></i>
+            <?php
+              date_default_timezone_set("Asia/Kuala_Lumpur");
+              echo date('D, M d, h:i:sa');
+            ?>
+          </a>
         </li>
 
-          <!-- Navbar Search -->
+        <!-- Navbar Search -->
         <li class="nav-item">
           <a class="nav-link" data-widget="navbar-search" href="#" role="button">
             <i class="fas fa-search"></i>
@@ -505,10 +511,10 @@ $(".nav-item a").on("click", function() {
 
 </script>
 
-    <script>
-        $(".nav-item a").on("click", function (e) {
-            $(".nav-item a").removeClass("active");
-            $(this).addClass("active");
-            e.preventDefault();
-        });
-    </script>
+<script>
+    $(".nav-item a").on("click", function (e) {
+        $(".nav-item a").removeClass("active");
+        $(this).addClass("active");
+        e.preventDefault();
+    });
+</script>

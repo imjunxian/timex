@@ -89,6 +89,7 @@
         alwaysShowClose: true
       });
     });
+  });
 
 </script>
 
