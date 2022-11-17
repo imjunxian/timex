@@ -214,7 +214,15 @@ include('../../includes/navbar.php');
 					<div class="tab-content patternbg">
 						<div id="details" class="tab-pane fade active in">
 							<h4>Product Description</h4>
-							<p class="text-justify"><?= $row['description'] ?></p>
+							<p class="text-justify">
+                <?php
+                if($row['description'] != ""){
+                  echo $row['description'];
+                }else{
+                  echo 'No Description';
+                }
+                ?>
+              </p>
               <h4 class="mt-20">Product Specifications</h4>
               <div class="row">
                 <div class="col-md-5">

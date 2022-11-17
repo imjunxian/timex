@@ -95,7 +95,7 @@ include('../../includes/navbar.php');
 
                 <div class="form-group">
                   <label for="description">Full Product Description</label>
-                  <textarea class="form-control rounded-0" id="description" name="description" placeholder="Full Description" rows="6"></textarea>
+                  <textarea class="form-control rounded-0" id="description" name="description" placeholder="Full Description" rows="6" required></textarea>
                 </div>
 
                  <div class="row">

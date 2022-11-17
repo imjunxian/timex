@@ -115,9 +115,7 @@ include('../../includes/navbar.php');
 
                 <div class="form-group">
                   <label for="description">Full Product Description</label>
-                   <textarea class="form-control" id="description" name="description" placeholder="Description" rows="6">
-                     <?php $str = strip_tags($row["description"], ''); echo $str; ?>
-                   </textarea>
+                   <textarea class="form-control" id="description" name="description" placeholder="Description" rows="6" required><?php $str = strip_tags($row["description"], ''); echo $str; ?></textarea>
                 </div>
 
                  <div class="row">
@@ -506,6 +504,12 @@ include('../../includes/footer.php');
          availability: {
           required: true,
         },
+        sdescription:{
+          required: true,
+        },
+        description:{
+          required: true,
+        },
       },
       messages: {
         name: {
@@ -533,6 +537,12 @@ include('../../includes/footer.php');
         },
         availability: {
           required: "Availability is required",
+        },
+        sdescription:{
+          required: "Short description is required",
+        },
+        description:{
+          required: "Full description is required",
         },
       },
       errorElement: 'span',
