@@ -1,7 +1,7 @@
 {
     "require": {
         "stripe/stripe-php": "^8.6.0",
-        "google/cloud-firestore": "^1.23",
+        "google/cloud-firestore": "^1.26",
         "grpc/grpc": "1.42"
     }
 }
