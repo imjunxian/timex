@@ -200,7 +200,7 @@ if(isset($_GET['checkout']) == 'cancel'){
                          <div class="payment">
                              <div class="card-details">
                                 <?php if($total > 1000):?>
-                                <button type="submit" class="btn btn-primary btn-round disabled" name="codBtn">Cash on Delivery (COD)</button>
+                                <button type="submit" class="btn btn-primary btn-round disabled" disabled>Cash on Delivery (COD)</button>
                                 <?php else: ?>
                                 <button type="submit" class="btn btn-primary btn-round" name="codBtn">Cash on Delivery (COD)</button>
                                 <?php endif;?>
