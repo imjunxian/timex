@@ -227,15 +227,15 @@ include('../../includes/navbar.php');
 <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Move to Recycle Bin?</h5>
+    <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Delete Permanently?</h5>
           <button class="close" type="button" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">×</span>
           </button>
         </div>
         <div class="modal-body">
-          <p>Select "Confirm" below if you want to move it to recycle bin.</p>
-
+          <p>Select "Confirm" below if you want to delete permanently.</p>
+          <p class="text-danger">* Warning: You can't undo this action.</p>
         </div>
         <div class="modal-footer justify-content-between">
           <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
