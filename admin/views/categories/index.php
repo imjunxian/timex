@@ -190,8 +190,8 @@ include('../../includes/navbar.php');
                                         <a href="#" class="btn btn-primary editBtn"
                                         data-id="<?php echo $row->id(); ?>" data-toggle="modal" data-target="#editModal"><i class="fa fa-pencil-alt" style="font-size:14px;" data-toggle="tooltip" title="Edit <?php echo $row["name"]; ?>"></i></a>
 
-                                        <a href="#" class="btn btn-danger deleteBtn"
-                                        data-id="<?php echo $row->id(); ?>" data-toggle="modal" data-target="#deleteModal"><i class="fa fa-trash" data-toggle="tooltip" title="Remove <?php echo $row["name"]; ?>"></i></a>
+                                        <!--<a href="#" class="btn btn-danger deleteBtn"
+                                        data-id="<?php echo $row->id(); ?>" data-toggle="modal" data-target="#deleteModal"><i class="fa fa-trash" data-toggle="tooltip" title="Remove <?php echo $row["name"]; ?>"></i></a>-->
 
                                       </div>
                                     </form>
