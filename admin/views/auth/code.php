@@ -75,7 +75,7 @@ if (isset($_POST['logout_btn'])) {
     unset($_SESSION['viewid']);
     /*$_SESSION['success'] = 'Logout Successfully';*/
     //session_destroy();
-    header("Location: ../auth/index.php?logoutsuccess");
+    header("Location: ../auth/index.php?logout=success");
 }
 
 ?>
