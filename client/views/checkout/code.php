@@ -252,7 +252,7 @@ if(isset($_POST['stripeBtn'])){
                   ],*/
                 'line_items' => $line_items,
                 'mode' => 'payment',
-                'success_url' => 'http://localhost/timex/checkout/success.php?checkout=success&session_id={CHECKOUT_SESSION_ID}',
+                'success_url' => 'http://localhost/timex/checkout/stripe.php?checkout=success&session_id={CHECKOUT_SESSION_ID}',
                 'cancel_url' => 'http://localhost/timex/checkout/index.php?checkout=cancel',
                 'payment_method_types' => ['card'],
             ]);
