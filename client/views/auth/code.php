@@ -28,10 +28,11 @@ if(isset($_POST['loginBtn'])){
             }else{
                 foreach($snapshots as $snapshot){
                     $dbpass = $snapshot["password"];
+                    $hashPass = $rsa->publicDecrypt($dbpass);
                     $status = $snapshot["status"];
                     $id = $snapshot->id();
                     //Check Password
-                    if(password_verify($password, $dbpass)){
+                    if($hashPass === $password){
                         //Check Status
                         if($status == "Active"){
                             $_SESSION['client_user_email'] = $email;
@@ -87,14 +88,15 @@ if(isset($_POST['registerBtn'])){
     date_default_timezone_set("Asia/Kuala_Lumpur");
     $dateTime = date('d M Y H:i:s');
     //encrypt password then store it to database
-    $hpassword = password_hash($password, PASSWORD_DEFAULT);
+    //$hpassword = password_hash($password, PASSWORD_DEFAULT);
+    $encryptPassword = $rsa->privEncrypt($password);
 
     $addInfo = [
         'name'=> $username,
         'email' => $email,
         'contact' => $contact,
         'status'=> "Active",
-        'password' => $hpassword,
+        'password' => $encryptPassword,
         'address' => "",
         'gender' => "",
         'dob' => "",

@@ -1,5 +1,13 @@
 <?php
 include('../../../dbconfig.php');
+include('../../../rsa/Rsa.php');
+
+use encryption\Rsa;
+
+$privateKey = '../../../rsa/key/private_key.pem';
+$publicKey = '../../../rsa/key/rsa_public_key.pem';
+
+$rsa = new Rsa($privateKey, $publicKey);
 
 //Login
 if(isset($_POST['loginBtn'])){
@@ -28,10 +36,11 @@ if(isset($_POST['loginBtn'])){
             }else{
 				foreach($snapshots as $snapshot){
 					$dbpass = $snapshot["password"];
+                    $hashPass = $rsa->publicDecrypt($dbpass);
 					$status = $snapshot["status"];
 					$id = $snapshot->id();
 					//Check Password
-					if(password_verify($password, $dbpass)){
+					if($hashPass === $password){
 						//Check Status
 						if($status == "Active"){
 							$_SESSION['user_email'] = $email;

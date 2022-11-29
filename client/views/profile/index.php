@@ -571,17 +571,112 @@ include('../../includes/footer.php');
   var orderNumber = document.getElementById('order_number').value;
   document.getElementById("return_order_no").value = orderNumber;
 
-  $(function() {
-        $.validator.addMethod(
-          "regex",
-          function(value, element, regexp) {
-            var re = new RegExp(regexp);
-            return this.optional(element) || re.test(value);
-          },
-          "Please check your input."
-        );
+    if (window.history.replaceState) {
+      window.history.replaceState(null, null, window.location.href);
+    }
 
-        $('#returnForm').validate({
+    $(".toggle-password").on("click", function() {
+      $(this).toggleClass("fa-eye fa-eye-slash");
+      var input = $("#password");
+      if (input.attr("type") == "password") {
+        input.attr("type", "text");
+      } else {
+        input.attr("type", "password");
+      }
+    });
+
+    function number_format(number, decimals, decPoint, thousandsSep){
+      decimals = decimals || 0;
+      number = parseFloat(number);
+
+      if(!decPoint || !thousandsSep){
+          decPoint = '.';
+          thousandsSep = ',';
+      }
+
+      var roundedNumber = Math.round( Math.abs( number ) * ('1e' + decimals) ) + '';
+      var numbersString = decimals ? roundedNumber.slice(0, decimals * -1) : roundedNumber;
+      var decimalsString = decimals ? roundedNumber.slice(decimals * -1) : '';
+      var formattedNumber = "";
+
+      while(numbersString.length > 3){
+          formattedNumber += thousandsSep + numbersString.slice(-3)
+          numbersString = numbersString.slice(0,-3);
+      }
+
+      return (number < 0 ? '-' : '') + numbersString + formattedNumber + (decimalsString ? (decPoint + decimalsString) : '');
+    }
+
+    function formatDate(date) {
+      var d = new Date(date),
+          month = '' + (d.getMonth() + 1),
+          day = '' + d.getDate(),
+          year = d.getFullYear();
+      if (month.length < 2)
+          month = '0' + month;
+      if (day.length < 2)
+          day = '0' + day;
+      return [year, month, day].join('-');
+    }
+
+      //AJAX for get data in modal
+    $(document).ready(function(){
+      $('.viewBtn').on('click', function(){
+          var orderId = $(this).attr("data-id");
+          $.ajax({
+              url:"code.php",
+              type:"POST",
+              data:{orderId:orderId},
+              dataType: "json",
+              success: function(data){
+
+                var orderDate = new Date(data.orderDateTime);
+                moment().format();
+                var momentOrder=moment(orderDate);
+                var format_date = momentOrder.format("D MMM YYYY");
+                var numberOfDaysToAdd = 5;
+                var result = orderDate.setDate(orderDate.getDate() + numberOfDaysToAdd);
+                var estimateArrival = new Date(result);
+                var momentEst = moment(estimateArrival);
+                var est_format = momentEst.format("D MMM YYYY");
+
+                //order item
+                $('.detailImg').prop('src', '../../../../timex/admin/dist/img/productImage/'+data.image_url+'');
+                $('.detailSku').html('<span>'+data.sku+'</span>');
+                $('.detailName').html('<span>'+data.name+'</span>');
+                $('.detailQuantity').html('<span>'+data.quantity+'</span>');
+                $('.detailAmount').html('<span>RM '+number_format(data.amount, 2)+'</span>');
+                //order
+                $('.detailOrderNo').html('<span>#'+data.order_no+'</span>');
+                $('.detailDate').html('<span>'+format_date+'</span>');
+                $('.detailSubtotal').html('<span>RM '+number_format(data.subtotal,2)+'</span>');
+                $('.detailShipping').html('<span>RM '+number_format(data.shipping_fee,2)+'</span>');
+                $('.detailTotal').html('<span>RM '+number_format(data.sales,2)+'</span>');
+                //EstimateArrival
+                $('.detailArrival').html('<span>'+est_format+'</span>');
+
+                $('#editForm').modal('show');
+              },
+              error: function (data) {
+                  alert("Something went wrong");
+              },
+          });
+      });
+    });
+</script>
+
+<script>
+    $(function() {
+      $.validator.addMethod(
+        "regex",
+        function(value, element, regexp) {
+          var re = new RegExp(regexp);
+          return this.optional(element) || re.test(value);
+        },
+        "Please check your input."
+      );
+
+      $('#returnForm').validate({
           rules: {
             return_img: {
               required: true,
@@ -608,7 +703,7 @@ include('../../includes/footer.php');
           },
           unhighlight: function(element, errorClass, validClass) {
             $(element).removeClass('is-invalid');
-          }
+          },
         });
         $('#profileForm').validate({
           rules: {
@@ -621,11 +716,10 @@ include('../../includes/footer.php');
             email: {
               required: true,
               email: true,
-              regex: /^\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}\b$/i
+              regex: /^\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}\b$/i,
             },
             contact:{
               required: true,
-              //can remove [\+]? => question mark, this means user must include + in input
               regex: /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/,
             },
             dob:{
@@ -648,7 +742,7 @@ include('../../includes/footer.php');
             email: {
               required: "* Email is required",
               email: "* Invaild email",
-              regex: "* Invalid email"
+              regex: "* Invalid email",
             },
             contact:{
               required: "* Contact is required",
@@ -676,7 +770,6 @@ include('../../includes/footer.php');
             $(element).removeClass('is-invalid');
           }
         });
-      });
 
       $('#usernameForm').validate({
           rules: {
@@ -686,7 +779,7 @@ include('../../includes/footer.php');
             email: {
               required: true,
               email: true,
-              regex: /^\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}\b$/i
+              regex: /^\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}\b$/i,
             },
           },
           messages: {
@@ -696,7 +789,7 @@ include('../../includes/footer.php');
             email: {
               required: "* Email is required",
               email: "* Invaild email",
-              regex: "* Invalid email"
+              regex: "* Invalid email",
             },
           },
           errorElement: 'span',
@@ -754,98 +847,6 @@ include('../../includes/footer.php');
           unhighlight: function(element, errorClass, validClass) {
             $(element).removeClass('is-invalid');
           }
-        });
-
-      if (window.history.replaceState) {
-        window.history.replaceState(null, null, window.location.href);
-      }
-
-      $(".toggle-password").on("click", function() {
-        $(this).toggleClass("fa-eye fa-eye-slash");
-        var input = $("#password");
-        if (input.attr("type") == "password") {
-          input.attr("type", "text");
-        } else {
-          input.attr("type", "password");
-        }
-      });
-
-      function number_format(number, decimals, decPoint, thousandsSep){
-        decimals = decimals || 0;
-        number = parseFloat(number);
-
-        if(!decPoint || !thousandsSep){
-            decPoint = '.';
-            thousandsSep = ',';
-        }
-
-        var roundedNumber = Math.round( Math.abs( number ) * ('1e' + decimals) ) + '';
-        var numbersString = decimals ? roundedNumber.slice(0, decimals * -1) : roundedNumber;
-        var decimalsString = decimals ? roundedNumber.slice(decimals * -1) : '';
-        var formattedNumber = "";
-
-        while(numbersString.length > 3){
-            formattedNumber += thousandsSep + numbersString.slice(-3)
-            numbersString = numbersString.slice(0,-3);
-        }
-
-        return (number < 0 ? '-' : '') + numbersString + formattedNumber + (decimalsString ? (decPoint + decimalsString) : '');
-      }
-
-      function formatDate(date) {
-        var d = new Date(date),
-            month = '' + (d.getMonth() + 1),
-            day = '' + d.getDate(),
-            year = d.getFullYear();
-        if (month.length < 2)
-            month = '0' + month;
-        if (day.length < 2)
-            day = '0' + day;
-        return [year, month, day].join('-');
-      }
-
-      //AJAX for get data in modal
-    $(document).ready(function(){
-      $('.viewBtn').on('click', function(){
-          var orderId = $(this).attr("data-id");
-          $.ajax({
-              url:"code.php",
-              type:"POST",
-              data:{orderId:orderId},
-              dataType: "json",
-              success: function(data){
-
-                var orderDate = new Date(data.orderDateTime);
-                moment().format();
-                var momentOrder=moment(orderDate);
-                var format_date = momentOrder.format("D MMM YYYY");
-                var numberOfDaysToAdd = 5;
-                var result = orderDate.setDate(orderDate.getDate() + numberOfDaysToAdd);
-                var estimateArrival = new Date(result);
-                var momentEst = moment(estimateArrival);
-                var est_format = momentEst.format("D MMM YYYY");
-
-                //order item
-                $('.detailImg').prop('src', '../../../../timex/admin/dist/img/productImage/'+data.image_url+'');
-                $('.detailSku').html('<span>'+data.sku+'</span>');
-                $('.detailName').html('<span>'+data.name+'</span>');
-                $('.detailQuantity').html('<span>'+data.quantity+'</span>');
-                $('.detailAmount').html('<span>RM '+number_format(data.amount, 2)+'</span>');
-                //order
-                $('.detailOrderNo').html('<span>#'+data.order_no+'</span>');
-                $('.detailDate').html('<span>'+format_date+'</span>');
-                $('.detailSubtotal').html('<span>RM '+number_format(data.subtotal,2)+'</span>');
-                $('.detailShipping').html('<span>RM '+number_format(data.shipping_fee,2)+'</span>');
-                $('.detailTotal').html('<span>RM '+number_format(data.sales,2)+'</span>');
-                //EstimateArrival
-                $('.detailArrival').html('<span>'+est_format+'</span>');
-
-                $('#editForm').modal('show');
-              },
-              error: function (data) {
-                  alert("Something went wrong");
-              },
-          });
       });
     });
 </script>

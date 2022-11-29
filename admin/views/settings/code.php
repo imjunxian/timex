@@ -7,7 +7,8 @@ if (isset($_POST['editpass_btn'])){
     $oldpass = $_POST['oldpass'];
     $newpassword = $_POST['password'];
     $cpassword = $_POST['cpassword'];
-    $newhpassword = password_hash($newpassword, PASSWORD_DEFAULT);
+    //$newhpassword = password_hash($newpassword, PASSWORD_DEFAULT);
+    $encryptPassword = $rsa->privEncrypt($newpassword);
 
     if($newpassword != '' && $cpassword != '' && $newpassword == $cpassword && $oldpass != ''){
         //get current user password from database
@@ -17,10 +18,11 @@ if (isset($_POST['editpass_btn'])){
 
         if($row -> exists()){
             $dbpass = $row['password'];
+            $decrypt = $rsa->publicDecrypt($dbpass);
             //current password must corrent then update
-            if(password_verify($oldpass, $dbpass)){
+            if($decrypt === $oldpass){
                 $updatePassword = [
-            		'password' => $newhpassword,
+            		'password' => $encryptPassword,
             	];
                 $query_newpass_run = $db->collection('admins')->document($id)->set($updatePassword, ['merge' => true]);
                 if ($query_newpass_run) {

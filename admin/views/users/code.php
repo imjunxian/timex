@@ -4,7 +4,6 @@ include('../../database/dbconfig.php');
 //Add function
 if(isset($_POST['addBtn'])){
 
-	$image = $_POST["profile_image"];
     $img = $_FILES["profile_image"]["name"];
     $storeName = $_FILES["profile_image"]["tmp_name"];
     $dir = "../../dist/img/profile/";
@@ -23,7 +22,8 @@ if(isset($_POST['addBtn'])){
     $role = $_POST['role'];
     $status = "Active";
     //encrypt password then store it to database
-    $hpassword = password_hash($password, PASSWORD_DEFAULT);
+    //$hpassword = password_hash($password, PASSWORD_DEFAULT);
+	$encPass = $rsa->privEncrypt($password);
 
 	date_default_timezone_set("Asia/Kuala_Lumpur");
     $dateTime = date('d M Y H:i:s');
@@ -36,7 +36,7 @@ if(isset($_POST['addBtn'])){
         'contact' => $contact,
         'role' => $role,
         'status'=> $status,
-        'password' => $hpassword,
+        'password' => $encPass,
         'image_url' => $img,
 		'date_joined' => $dateTime,
     ];
