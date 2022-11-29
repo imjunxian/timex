@@ -38,18 +38,16 @@ include('../../includes/navbar.php');
 
 <div class="container">
   <div class="row">
-      <form method="POST" action="code.php">
+      <!--<form method="POST" action="code.php">
         <div class="col-lg-6 col-md-12 col-sm-12" style="display: flex;">
-          <div class="image-upload">
-            <label for="file-input">
-              <span class="fa fa-camera"></span>
-            </label>
-            <input id="file-input" type="file" />
-          </div>
           <input type="search" class="form-control mx-auto" placeholder="Search..." id="searchResult" name="searchResult" required>
           <button type="submit" class="btn btn-main btn-small" name="searchBtn"><i class="fa fa-search"></i></button>
-          <!--<a href="#" class="btn btn-info" onclick="startConverting();"><i class="fa fa-microphone"></i></a>-->
         </div>
+      </form>-->
+    <div class="container">
+      <form action="../shop/" method="get" id="search-form">
+        <input name="search_query" onkeyup="this.value = this.value.toUpperCase();" type="text" placeholder="Search Product" autocomplete="off" autofocus>
+        <!-- <button type="z  zbutton"><i class="fas fa-microphone"></i></button> --></div>
       </form>
     </div>
   </div>
@@ -315,37 +313,80 @@ include('../../includes/footer.php');
 ?>
 
 <script>
-    var result = document.getElementById('searchResult');
+    //voice recognition
+  const searchForm = document.querySelector("#search-form");
+  const searchFormInput = searchForm.querySelector("input"); // <=> document.querySelector("#search-form input");
+  const info = document.querySelector(".info");
 
-    function startConverting () {
+  // The speech recognition interface lives on the browser’s window object
+  const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition; // if none exists -> undefined
 
-    if('webkitSpeechRecognition' in window) {
-        var speechRecognizer = new webkitSpeechRecognition();
-        speechRecognizer.continuous = true;
-        speechRecognizer.interimResults = true;
-        speechRecognizer.lang = 'en-US';
-        speechRecognizer.start();
+  if (SpeechRecognition) {
+    console.log("Your Browser supports speech Recognition");
 
-        var finalTranscripts = '';
+    const recognition = new SpeechRecognition();
+    recognition.continuous = true;
+    // recognition.lang = "en-US";
 
-        speechRecognizer.onresult = function(event) {
-            var interimTranscripts = '';
-            for(var i = event.resultIndex; i < event.results.length; i++){
-                var transcript = event.results[i][0].transcript;
-                transcript.replace("\n", "<br>");
-                if(event.results[i].isFinal) {
-                    finalTranscripts += transcript;
-                }else{
-                    interimTranscripts += transcript;
-                }
-            }
-            result.innerHTML = finalTranscripts + '<span style="color: #999">' + interimTranscripts + '</span>';
-        };
-        speechRecognizer.onerror = function (event) {};
-        }else {
-            result.innerHTML = 'Your browser is not supported. Please download Google chrome or Update your Google chrome!!';
-        }
+    searchForm.insertAdjacentHTML("beforeend", '<button class="btn btn-main" type="button"><i class="fas fa-microphone" style="font-size:15px;"></i></button>');
+
+    const micBtn = searchForm.querySelector("button");
+    const micIcon = micBtn.firstElementChild;
+
+    micBtn.addEventListener("click", micBtnClick);
+
+    function micBtnClick() {
+      if (micIcon.classList.contains("fa-microphone")) { // Start Voice Recognition
+        recognition.start(); // First time you have to allow access to mic!
+      } else {
+        recognition.stop();
+      }
     }
+
+    recognition.addEventListener("start", startSpeechRecognition); // <=> recognition.onstart = function() {...}
+    function startSpeechRecognition() {
+      micIcon.classList.remove("fa-microphone");
+      micIcon.classList.add("fa-microphone-slash");
+      searchFormInput.focus();
+      console.log("Voice activated, SPEAK");
+    }
+
+    recognition.addEventListener("end", endSpeechRecognition); // <=> recognition.onend = function() {...}
+    function endSpeechRecognition() {
+      micIcon.classList.remove("fa-microphone-slash");
+      micIcon.classList.add("fa-microphone");
+      searchFormInput.focus();
+      console.log("Speech recognition service disconnected");
+    }
+
+    recognition.addEventListener("result", resultOfSpeechRecognition); // <=> recognition.onresult = function(event) {...} - Fires when you stop talking
+    function resultOfSpeechRecognition(event) {
+      const current = event.resultIndex;
+      transcript = event.results[current][0].transcript;
+      transcript = transcript.toUpperCase();
+      transcript = transcript.substr(0,transcript.length-1);
+
+      if (transcript.toLowerCase().trim() === "stop recording") {
+        recognition.stop();
+      } else if (!searchFormInput.value) {
+        searchFormInput.value = transcript;
+      } else {
+        if (transcript.toLowerCase().trim() === "go") {
+          searchForm.submit();
+        } else if (transcript.toLowerCase().trim() === "reset input") {
+          searchFormInput.value = "";
+        } else {
+          searchFormInput.value = transcfript;
+        }
+      }
+    }
+
+    info.textContent = 'Voice Commands: "stop recording", "reset input", "go"';
+
+  } else {
+    console.log("Your Browser does not support speech Recognition");
+    info.textContent = "Your Browser does not support Speech Recognition";
+  }
 </script>
 
 <script type="text/javascript">

@@ -307,7 +307,7 @@
                 </ul>
               </li>
 
-              <li class="nav-item">
+              <!--<li class="nav-item">
                 <a href="../reports/analytics.php" class="nav-link">
                   <i class="nav-icon fa fa-chart-line"></i>
                   <p>
@@ -315,7 +315,7 @@
                     <span class="badge badge-info right"></span>
                   </p>
                 </a>
-              </li>
+              </li>-->
 
             <li class="nav-header">Settings</li>
             <!--Settings-->

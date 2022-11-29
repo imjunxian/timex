@@ -58,9 +58,9 @@ include('../../includes/navbar.php');
                   <form action="">
                     <div class="card-header">
                       <h2 class="card-title">Customer Services</h2>
-                      <a class="btn btn-primary float-right" href="https://www.messenger.com/t/3138030279618814/" target="_blank">
+                      <!--<a class="btn btn-primary float-right" href="https://www.messenger.com/t/3138030279618814/" target="_blank">
                         <i class="fab fa-facebook-messenger"></i> Messenger
-                      </a>
+                      </a>-->
                     </div>
                     <!-- /.card-header -->
                     <div class="card-body">

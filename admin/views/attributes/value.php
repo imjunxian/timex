@@ -343,8 +343,7 @@ include('../../includes/footer.php');
     });
 
     //AJAX for get data in modal
-    $(document).ready(function(){
-      $('.editBtn').on('click', function(){
+    $(document).on('click', '.editBtn', function() {
           var attvId = $(this).attr("data-id");
           $.ajax({
               url:"value_code.php",
@@ -364,6 +363,5 @@ include('../../includes/footer.php');
               },
           });
       });
-    });
 
 </script>
