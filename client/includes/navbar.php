@@ -114,13 +114,9 @@
 						<a href="../about/">About</a>
 					</li>
 
-					<li class="dropdown ">
-						<a href="../shop/">Shop</a>
-					</li>
-
-					<!--<li class="dropdown dropdown-slide">
-						<a href="#!" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-delay="350"
-							role="button" aria-haspopup="true" aria-expanded="false">Shop <span
+					<li class="dropdown dropdown-slide">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-delay="350"
+							role="button" aria-haspopup="true" aria-expanded="false" onclick="window.location.href='../shop/';">Shop <span
 								class="tf-ion-ios-arrow-down"></span></a>
 						<div class="dropdown-menu">
 							<div class="row">
@@ -162,7 +158,7 @@
 								</div>
 							</div>
 						</div>
-					</li>-->
+					</li>
 
 					<li class="dropdown ">
 						<a href="../contact/">Contact</a>
