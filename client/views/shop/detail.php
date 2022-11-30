@@ -139,13 +139,33 @@ include('../../includes/navbar.php');
           </div>
         </div>
       </div>
+
       <form action="code.php" method="post" id="addToForm">
         <div class="col-md-7">
           <div class="single-product-details">
             <input type="hidden" class="form-control" value="<?= $_GET["id"]?>" id="productIdOverview" name="productIdOverview">
             <input type="hidden" class="form-control" value="<?= $row["stripe_product_id"]?>" id="stripe_id" name="stripe_id">
             <input type="hidden" class="form-control" value="<?= $row["stripe_price_id"]?>" id="stripe_price" name="stripe_price">
-            <h5><?= $row['sku'] ?></h5>
+            <h5>
+              <?= $row['sku'] ?>
+              &nbsp;
+              <style>
+                .bage{
+                  background: #000;
+                  color: #fff;
+                  font-size: 12px;
+                  padding: 4px 12px;
+                  font-weight: 300;
+                  display: inline-block;
+                }
+              </style>
+              <?php if($row['quantity'] == '0'): ?>
+              <span class="bage">Out of Stock</span>
+              <?php endif; ?>
+              <?php if($row['quantity'] == '1'): ?>
+              <span class="bage">Low Stock Now</span>
+              <?php endif; ?>
+            </h5>
             <h2><?= $row['name'] ?></h2>
             <p class="product-price mt-20 h4"><?php echo "RM " . number_format($row['price'],2); ?></p>
             <p class="product-description mt-20">

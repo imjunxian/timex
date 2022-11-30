@@ -223,6 +223,9 @@ include('../../includes/navbar.php');
                         <?php if($row['quantity'] == '0'): ?>
                         <span class="bage">Out of Stock</span>
                         <?php endif; ?>
+                        <?php if($row['quantity'] == '1'): ?>
+                        <span class="bage">Low Stock Now</span>
+                        <?php endif; ?>
                         <img class="img-responsive" src="../admin/dist/img/productImage/<?= $row['image_url'] ?>" alt="product-img" />
                         <div class="preview-meta">
                           <ul>
@@ -259,6 +262,9 @@ include('../../includes/navbar.php');
                         <div class="product-thumb">
                           <?php if($row['quantity'] == '0'): ?>
                           <span class="bage">Out of Stock</span>
+                          <?php endif; ?>
+                          <?php if($row['quantity'] == '1'): ?>
+                          <span class="bage">Low Stock Now</span>
                           <?php endif; ?>
                           <img class="img-responsive" src="../admin/dist/img/productImage/<?= $row['image_url'] ?>" alt="product-img" />
                           <div class="preview-meta">
