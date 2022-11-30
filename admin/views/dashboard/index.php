@@ -408,7 +408,7 @@ include('../../includes/navbar.php');
                           $docRef = $db->collection('orders')->orderBy('orderDate', 'DESC')->limit(5);
                           $snapshot = $docRef->documents();
 
-                          if($snapshot == Array()){
+                          if($snapshot -> rows() == Array()){
                             ?>
                             <tr>
                               <td align="center" colspan="5">
@@ -494,65 +494,7 @@ include('../../includes/navbar.php');
                     <?php
                     $docRefProd = $db->collection('products')->where('status', '=', 'Active')->orderBy('date', 'DESC')->limit(4);
                     $snapshotProd = $docRefProd->documents();
-
-                    foreach($snapshotProd as $row){
-                    if ($row->exists()) {
-                    ?>
-                      <li class="item">
-                      <div class="product-img">
-                        <?php
-                        echo '<a href="../../dist/img/productImage/'.$row['image_url'].'"><img src="../../dist/img/productImage/'.$row['image_url'].'" class="img-thumbnail" alt="'.$row['name'].'" title="'.$row['name'].'"/></a>';
-                        ?>
-                      </div>
-                      <div class="product-info">
-                        <a href="../products/detail.php?id=<?php echo $row->id(); ?>" class="product-title" style="color: #007BFF;width: 50%;" data-toggle="tooltip" title="<?php echo $row["name"]; ?>">
-                          <?php
-                            $str = $row['name'];
-                            $str = strlen($row['name']) > 23 ? substr($row['name'],0,23)."..." : $row['name'];
-                            echo $str;
-                          ?>
-                        </a>
-                          <?php
-                            if($row['availability'] == 'Available'){
-                              ?>
-                              <span class="badge badge-success float-right">Available</span>
-                              <?php
-                            }else if($row['availability'] == 'Unavailable'){
-                              ?>
-                              <span class="badge badge-warning float-right">Unavailable</span>
-                              <?php
-                            }
-                          ?>
-                        <span class="product-description" style="width:80%;" data-toggle="tooltip" title="<?php echo $row["short_description"]; ?>">
-                          <?php
-                          $str = $row['short_description'];
-                          $str = strlen($row['short_description']) > 35 ? substr($row['short_description'],0,35)."..." : $row['short_description'];
-                          $strr = strip_tags($str, '');
-                          if($row['short_description'] != ""){
-                            echo $strr;
-                          }else{
-                            echo "No Description";
-                          }
-                          ?>
-                          <br>
-                          <b>RM <?php echo number_format($row['price'],2); ?></b>,
-                           Qtt: <b><?php echo $row['quantity']; ?></b>&nbsp;
-                          <?php
-                                if($row['quantity'] == '1' && $row['quantity'] > '0'){
-                                  ?>
-                                  <span class="badge badge-warning">LowStock</span>
-                                  <?php
-                                }else if($row['quantity'] == '0'){
-                                  ?>
-                                  <span class="badge badge-danger">StockOut</span>
-                                  <?php
-                                }
-                          ?>
-                        </span>
-                      </div>
-                    </li>
-                    <?php
-                    }else{
+                    if($snapshotProd -> rows() == Array()){
                       ?>
                       <br><br>
                       <div align="center">
@@ -584,8 +526,67 @@ include('../../includes/navbar.php');
                       <p class=" text-center text-secondary">No Data</p>
                       <br>
                       <?php
+                    }else{
+                      foreach($snapshotProd as $row){
+                        if ($row->exists()) {
+                        ?>
+                          <li class="item">
+                          <div class="product-img">
+                            <?php
+                            echo '<a href="../../dist/img/productImage/'.$row['image_url'].'"><img src="../../dist/img/productImage/'.$row['image_url'].'" class="img-thumbnail" alt="'.$row['name'].'" title="'.$row['name'].'"/></a>';
+                            ?>
+                          </div>
+                          <div class="product-info">
+                            <a href="../products/detail.php?id=<?php echo $row->id(); ?>" class="product-title" style="color: #007BFF;width: 50%;" data-toggle="tooltip" title="<?php echo $row["name"]; ?>">
+                              <?php
+                                $str = $row['name'];
+                                $str = strlen($row['name']) > 23 ? substr($row['name'],0,23)."..." : $row['name'];
+                                echo $str;
+                              ?>
+                            </a>
+                              <?php
+                                if($row['availability'] == 'Available'){
+                                  ?>
+                                  <span class="badge badge-success float-right">Available</span>
+                                  <?php
+                                }else if($row['availability'] == 'Unavailable'){
+                                  ?>
+                                  <span class="badge badge-warning float-right">Unavailable</span>
+                                  <?php
+                                }
+                              ?>
+                            <span class="product-description" style="width:80%;" data-toggle="tooltip" title="<?php echo $row["short_description"]; ?>">
+                              <?php
+                              $str = $row['short_description'];
+                              $str = strlen($row['short_description']) > 35 ? substr($row['short_description'],0,35)."..." : $row['short_description'];
+                              $strr = strip_tags($str, '');
+                              if($row['short_description'] != ""){
+                                echo $strr;
+                              }else{
+                                echo "No Description";
+                              }
+                              ?>
+                              <br>
+                              <b>RM <?php echo number_format($row['price'],2); ?></b>,
+                               Qtt: <b><?php echo $row['quantity']; ?></b>&nbsp;
+                              <?php
+                                    if($row['quantity'] == '1' && $row['quantity'] > '0'){
+                                      ?>
+                                      <span class="badge badge-warning">LowStock</span>
+                                      <?php
+                                    }else if($row['quantity'] == '0'){
+                                      ?>
+                                      <span class="badge badge-danger">StockOut</span>
+                                      <?php
+                                    }
+                              ?>
+                            </span>
+                          </div>
+                        </li>
+                        <?php
+                        }
+                      }
                     }
-                  }
                 ?>
                 </ul>
               </div>
