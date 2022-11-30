@@ -68,7 +68,7 @@ include('../../includes/navbar.php');
                       <div class="form-group">
                         <label for="email">Email</label>
                         <input type="email" class="form-control" id="email" placeholder="Email" name="email" required>
-                      </div>                
+                      </div>
                     </div>
                   </div>
 
@@ -83,7 +83,7 @@ include('../../includes/navbar.php');
                         <div class="form-group">
                           <label>Birthday</label>
                           <input type="date" id="dob" class="form-control" placeholder="Select Birthday" name="dob" onmouseover="(this.type='date')" required>
-                        </div>  
+                        </div>
                     </div>
                   </div>
 
@@ -193,6 +193,9 @@ include('../../includes/footer.php');
 
     $('#addForm').validate({
       rules: {
+        profile_image:{
+          required: true,
+        },
         email: {
           required: true,
           email: true,
@@ -228,6 +231,9 @@ include('../../includes/footer.php');
         },
       },
       messages: {
+        profile_image:{
+          required: "Image is required",
+        },
         email: {
           required: "Email is required",
           email: "Please enter a vaild email, eg demo@demo.com",
@@ -305,7 +311,7 @@ include('../../includes/footer.php');
           cp.attr("type", "password");
         }
     });
-                 
+
 </script>
 
 <script type="text/javascript">
@@ -313,11 +319,11 @@ include('../../includes/footer.php');
 
     $("#mainProductNav").addClass('active');
     $("#addProductNav").addClass('active');
-    
-    var btnCust = '<button type="button" class="btn btn-secondary" title="Add picture tags" ' + 
+
+    var btnCust = '<button type="button" class="btn btn-secondary" title="Add picture tags" ' +
         'onclick="alert(\'Just a button for decoration. &#128579;\')">' +
         '<i class="fa fa-tag"></i>' +
-        '</button>'; 
+        '</button>';
     $(".profile_image").fileinput({
         overwriteInitial: true,
         maxFileSize: 1500,

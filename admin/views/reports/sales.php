@@ -97,13 +97,13 @@ include('../../includes/navbar.php');
                                                   <td>
                                                     <?php
                                                     if($row['order_status'] == "Pending"){
-                                                        ?><span class="badge badge-warning">Pending</span><?php
+                                                        ?>Pending<?php
                                                         }elseif($row['order_status'] == "Delivered"){
-                                                        ?><span class="badge badge-info">Delivered</span><?php
+                                                        ?>Delivered<?php
                                                         }elseif($row['order_status'] == "Completed"){
-                                                        ?><span class="badge badge-success">Completed</span><?php
+                                                        ?>Completed<?php
                                                         }elseif($row['order_status'] == "Cancelled"){
-                                                        ?><span class="badge badge-danger">Cancelled</span><?php
+                                                        ?>Cancelled<?php
                                                         }
                                                     ?>
                                                   </td>
