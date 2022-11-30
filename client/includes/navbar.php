@@ -40,7 +40,6 @@
 				</div>
 			</div>
 			<div class="col-md-4 col-xs-12 col-sm-4">
-
 				<!-- Cart -->
 				<ul class="top-menu text-right list-inline">
 					<li class="cart-nav">
@@ -204,6 +203,66 @@
 							<?php
 						}
 					?>
+					<li class="dropdown ">
+						<style type="text/css">
+							.select {
+								position: relative;
+								min-width: 200px;
+							}
+							.select select {
+								-webkit-appearance: none;
+								padding: 7px 40px 7px 12px;
+								width: 100%;
+								border: 1px solid #e8eaed;
+								border-radius: 5px;
+								background: #FCFCFC;
+								box-shadow: 0 1px 3px -2px #9098a9;
+								cursor: pointer;
+								font-family: inherit;
+								font-size: 16px;
+								transition: all 150ms ease;
+							}
+							.select select:required:invalid {
+								color: #5a667f;
+							}
+							.select select option {
+								color: #223254;
+							}
+							.select select option[value=""][disabled] {
+								display: none;
+							}
+							.select select:focus {
+								outline: none;
+								border-color: #07f;
+								box-shadow: 0 0 0 2px rgba(0,0,0,0);
+							}
+							.select select:hover + svg {
+								stroke: #07f;
+							}
+							#google_translate_element select {
+								color: #333;
+								border-style: none;
+								border: 1px solid transparent;
+								font-size: 13px;
+								text-transform: uppercase;
+								margin-top: 12px;
+    							width: 90%;
+							}
+							.goog-logo-link {
+								display: none !important;
+							}
+							.goog-te-gadget {
+								color: transparent !important;
+							}
+						</style>
+						<span>
+							<div class="translate select" id="google_translate_element"></div>
+							<script type="text/javascript">
+								function googleTranslateElementInit() {  new google.translate.TranslateElement({pageLanguage: 'en', includedLanguages : 'ms,zh-CN,en'}, 'google_translate_element');}
+							</script>
+							<script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+						</span>
+					</li>
 				</ul><!-- / .nav .navbar-nav -->
 
 			</div>
