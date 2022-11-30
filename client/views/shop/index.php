@@ -46,7 +46,7 @@ include('../../includes/navbar.php');
       </form>-->
     <div class="container">
       <form action="../shop/" method="get" id="search-form">
-        <input name="search_query" onkeyup="this.value = this.value.toUpperCase();" type="text" placeholder="Search Product" autocomplete="off" autofocus>
+        <input name="search_query" onkeyup="this.value = this.value.toUpperCase();" type="text" placeholder="Search" autocomplete="off" autofocus>
         <!-- <button type="z  zbutton"><i class="fas fa-microphone"></i></button> --></div>
       </form>
     </div>
