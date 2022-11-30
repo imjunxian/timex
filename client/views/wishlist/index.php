@@ -75,7 +75,7 @@ include('../../includes/navbar.php');
               <i class="icon tf-ion-ios-heart" style="font-size: 150px;color: #ebecee;"></i>
               <h2>Your Wishlist is empty!</h2>
               <p class="mb-3 pb-1">No products were added to the Wishlist.</p>
-              <a href="../shop/" class="btn btn-main btn-medium btn-round text-center mt-20">Continue Shopping</a>
+              <a href="../shop/" class="btn btn-main btn-medium btn-round text-center mt-20">Shop Now</a>
           </div>
         </div>
         <?php
