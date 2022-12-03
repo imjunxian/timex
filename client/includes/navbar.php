@@ -210,7 +210,6 @@
 								min-width: 200px;
 							}
 							.select select {
-								-webkit-appearance: none;
 								padding: 7px 40px 7px 12px;
 								width: 100%;
 								border: 1px solid #e8eaed;
@@ -236,7 +235,7 @@
 								border-color: #07f;
 								box-shadow: 0 0 0 2px rgba(0,0,0,0);
 							}
-							.select select:hover + svg {
+							.select:hover {
 								stroke: #07f;
 							}
 							#google_translate_element select {
@@ -245,8 +244,8 @@
 								border: 1px solid transparent;
 								font-size: 13px;
 								text-transform: uppercase;
-								margin-top: 12px;
-    							width: 90%;
+								margin-top: 14px;
+    							width: 95%;
 							}
 							.goog-logo-link {
 								display: none !important;
