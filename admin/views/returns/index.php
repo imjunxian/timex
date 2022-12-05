@@ -99,6 +99,7 @@ include('../../includes/navbar.php');
                             <th></th>
                             <th></th>
                             <th></th>
+                            <th></th>
                         </tr>
                       </tfoot>
                     </table>
