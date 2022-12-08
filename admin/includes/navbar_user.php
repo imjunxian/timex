@@ -287,6 +287,13 @@
                 </a>
               </li>
 
+              <li class="nav-item">
+                <a href="../mail/" class="nav-link">
+                  <i class="fa fa-envelope nav-icon"></i>
+                  <p>Mails</p>
+                </a>
+              </li>
+
               <li class="nav-header">Reports</li>
 
               <li class="nav-item">
