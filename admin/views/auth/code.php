@@ -3,6 +3,14 @@ include('../../../dbconfig.php');
 include('../../../rsa/Rsa.php');
 
 use encryption\Rsa;
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\SMTP;
+use PHPMailer\PHPMailer\Exception;
+
+require '../../plugins/PHPMailer/src/Exception.php';
+require '../../plugins/PHPMailer/src/PHPMailer.php';
+require '../../plugins/phpmailer/src/SMTP.php';
+
 
 $privateKey = '../../../rsa/key/private_key.pem';
 $publicKey = '../../../rsa/key/rsa_public_key.pem';
@@ -102,21 +110,23 @@ if (isset($_POST['logout_btn'])) {
         $message = "Something Wrong. Please try again.";
     }
 
-    $headers = "MIME-Version: 1.0" . "\r\n";
-    $headers .= "Content-Type: text/html; charset=ISO-8859-1\r\n";
+    $mail = new PHPMailer(true);
 
-    $headers .= 'From: noreply <no-reply@gmail.com>' . "\r\n";
-    $headers .= "To: <".$email_sent.">\r\n";
-    $header .= "Reply-To: no-reply@gmail.com\r\n";
+    $mail->isSMTP();
+    $mail->Host       = 'smtp.gmail.com';
+    $mail->SMTPAuth   = true;
+    $mail->Username   = 'timexwatch01@gmail.com';
+    $mail->Password   = 'qafnrifmdskupnkl';
+    $mail->SMTPSecure = 'ssl';
+    $mail->Port       = 465;
 
-    mail($email_sent,$subject,$message,$headers);
+    $mail->addAddress($email_sent);
+    $mail->isHTML(true);
+    $mail->Subject = $subject;
+    $mail->Body = $message;
+
+    $mail->send();
 }
-$headers = "MIME-Version: 1.0" . "\r\n";
-$headers .= "Content-Type: text/html; charset=ISO-8859-1\r\n";
-
-$headers .= 'From: noreply <no-reply@gmail.com>' . "\r\n";
-$headers .= "To: <".$email_sent.">\r\n";
-mail('junxian010729@gmail.com','hello','test',$headers);
 
 
 if (isset($_POST['sendBtn'])) {
@@ -124,7 +134,7 @@ if (isset($_POST['sendBtn'])) {
     $selector = bin2hex(random_bytes(8));
     $token = random_bytes(32);
     $email = $_POST['email'];
-    $url = "http://localhost:8080/inv/views/auth/resetPassword.php?selector=".$selector."&validator=".bin2hex($token)."&email=".$email;
+    $url = "http://localhost/timex/admin/views/auth/resetPassword.php?selector=".$selector."&validator=".bin2hex($token)."&email=".$email;
     $expires = date("U") + 1800; // 30 minutes will be expired
     $response = $_POST['g-recaptcha-response'];
 
@@ -170,6 +180,76 @@ if (isset($_POST['sendBtn'])) {
                 }
             }
         }
+    }
+}
+
+if(isset($_POST['resetBtn'])){
+
+    $email = $_POST["email"];
+    $selector = $_POST["selector"];
+    $validator = $_POST["validator"];
+    $newpassword = $_POST['password'];
+    $cpassword = $_POST['cpassword'];
+    $newhpassword = $rsa->privEncrypt($newpassword);
+    $currentDate = date("U");
+
+    $pattern = "/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/";
+
+    if($newpassword == ''){
+        $_SESSION['status'] = "Password cannot be empty";
+        header("Location: resetPassword.php?selector={$selector}&validator={$validator}&email={$email}");
+    }else if($cpassword == ''){
+        $_SESSION['status'] = "Please confirm your password";
+        header("Location: resetPassword.php?selector={$selector}&validator={$validator}&email={$email}");
+    }else if((!preg_match($pattern, $newpassword)) && (!preg_match($pattern, $cpassword))){
+        $_SESSION['status'] = "Password must at least 8 characters which is contained 1 number, 1 uppercase, 1 lowercase letter";
+        header("Location: resetPassword.php?selector={$selector}&validator={$validator}&email={$email}");
+    }else if($newpassword != $cpassword){
+        $_SESSION['status'] = "Password not match";
+        header("Location: resetPassword.php?selector={$selector}&validator={$validator}&email={$email}");
+    }else if($newpassword != '' && $cpassword != '' && $newpassword == $cpassword){
+
+
+        $stmtSelector = $db->collection('password_reset')->where('selector', '==', $selector)->documents();
+
+        foreach($stmtSelector as $row) {
+            $token = $row["token"]; //token in database
+            $tokenBin = hex2bin($validator); //encrypt the token that get from browser
+            $exp = $row["expires"]; //get expires time in database
+            $email = $row["email"];
+            $docId = $row->id();
+
+            if($currentDate >= $exp){
+                $deleteDoc = $db->collection('password_reset')->document($docId)->delete();
+                header("Location: ../error/404.php");
+
+            }else if($currentDate < $exp){
+                if(password_verify($tokenBin, $token)){
+                    $updatePassword = [
+                        'password' => $newhpassword,
+                    ];
+                    $query_newpass = $db->collection('admins')->where('email', '=', $email)->set($updatePassword, ['merge' => true]);
+
+                    $delect_doc = $deleteDoc;
+
+                    if($query_newpass && $query_dele){
+                        $_SESSION['successStatus'] = "Password Updated Successfully.";
+                        header("Location: index.php?passwordupdated");
+                    }else{
+                        $_SESSION['status'] = "Failed to Reset";
+                        header("Location: resetPassword.php?selector={$selector}&validator={$validator}&email={$email}");
+                    }
+
+                }else{
+                    $_SESSION['status'] = "Something went wrong.";
+                    header("Location: resetPassword.php?selector={$selector}&validator={$validator}&email={$email}");
+                }
+            }else{
+                header("Location: ../error/404.php");
+            }
+        }
+    }else{
+        header("Location: ../error/404.php");
     }
 }*/
 
