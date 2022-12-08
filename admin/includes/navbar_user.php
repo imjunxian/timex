@@ -307,15 +307,15 @@
                 </ul>
               </li>
 
-              <!--<li class="nav-item">
-                <a href="../reports/analytics.php" class="nav-link">
+              <li class="nav-item">
+                <a href="https://analytics.google.com/analytics/web/#/p299481977/realtime/overview?params=_u..nav%3Dmaui&collectionId=app" class="nav-link" target="_blank">
                   <i class="nav-icon fa fa-chart-line"></i>
                   <p>
-                    Analytics
+                    Google Analytics
                     <span class="badge badge-info right"></span>
                   </p>
                 </a>
-              </li>-->
+              </li>
 
             <li class="nav-header">Settings</li>
             <!--Settings-->

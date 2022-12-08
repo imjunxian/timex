@@ -36,7 +36,7 @@ include('../../includes/header.php');
     -o-object-fit: cover;
        object-fit: cover; }
   .login-card .card-body {
-    padding: 50px 40px 40px; 
+    padding: 50px 40px 40px;
   }
     @media (max-width: 422px) {
       .login-card .card-body {
@@ -117,7 +117,7 @@ include('../../includes/header.php');
              <form action="code.php" method="post" id="loginForm">
 
                 <div class="input-group mb-4 ">
-                    <input type="email" name="email" class="form-control" id="email" placeholder="Email" value="<?php if(isset($_COOKIE['email'])) { echo $_COOKIE['email']; }else{ echo "";} ?>"> 
+                    <input type="email" name="email" class="form-control" id="email" placeholder="Email" value="<?php if(isset($_COOKIE['email'])) { echo $_COOKIE['email']; }else{ echo "";} ?>">
                     <div class="input-group-append">
                       <div class="input-group-text">
                         <span class="fas fa-envelope"></span>
@@ -146,7 +146,7 @@ include('../../includes/header.php');
                     <div class="g-recaptcha" data-sitekey="6LdBhb0dAAAAALymVbQF8NTZ7OA9pikagw7Elmwt" id="grecaptcha" data-callback="callback"></div>
                   </div>
                 </div>
-                  
+
                   <div class="row">
                   <!-- /.col -->
                   <div class="col-12 mt-2">
@@ -155,13 +155,13 @@ include('../../includes/header.php');
                   <!-- /.col -->
                   </div>
                 <br>
-                <p class="login-card-footer-text "><a href="../auth/forgetPassword.php"><i class="fa fa-lock"></i> Forget Password?</a></p>
+                <p class="login-card-footer-text "><!--<a href="../auth/forgetPassword.php"><i class="fa fa-lock"></i> Forget Password?</a>--></p>
                 </form>
             </div>
           </div>
         </div>
       </div>
-  
+
     </div>
   </main>
 
@@ -264,4 +264,3 @@ include('../../includes/script.php');
         }
     </style>
 
-    

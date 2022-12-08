@@ -12,7 +12,7 @@ include('../../includes/navbar.php');
   width: 60px;
   height: 34px;
 }
-.switch .switch-class  { 
+.switch .switch-class  {
   opacity: 0;
   width: 0;
   height: 0;
@@ -111,7 +111,7 @@ input:checked + .slider:before {
               <button type="submit" class="btn btn-main btn-medium btn-round" style="width: 100%;" id="loginBtn" name="loginBtn" disabled>Login</button>
             </div>
           </form>
-          <p class="mt-20"><a href="../auth/forgotPassword.php"> Forgot your password?</a></p>
+          <p class="mt-20"><!--<a href="../auth/forgotPassword.php"> Forgot your password?</a>--></p>
           <p>New in this site ?<a href="./signup.php"> Create New Account</a></p>
         </div>
       </div>
