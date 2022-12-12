@@ -83,9 +83,12 @@ include('../../includes/footer.php');
           rules: {
             contact:{
               required: true,
+              minlength: 10,
+              digits: true
             },
             username: {
               required: true,
+              minlength: 5
             },
             email: {
               required: true,
@@ -106,9 +109,12 @@ include('../../includes/footer.php');
           messages: {
             contact:{
               required: "* Phone Number is required",
+              minlength: "Please enter valid phone number eg. 0123456789",
+              digits:"Only numbers is allowed"
             },
             username: {
               required: "* Username is required",
+              minlength: "Username must be at least 5 characters"
             },
             email: {
               required: "* Email is required",
