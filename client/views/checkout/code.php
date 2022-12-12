@@ -238,6 +238,7 @@ if(isset($_POST['stripeBtn'])){
             $shipDoc = $db->collection('company')->document('Qwh7lii8yRbpD62j6u1R')->snapshot();
             $fee = $shipDoc['shipping_fee'];
             $checkout_session = Stripe\Checkout\Session::create([
+                'shipping_options' => [['shipping_rate' => 'shr_1MEAIQCFJt3ZkTxS6LaZVbND']],
                 /*'shipping_options' => [
                     [
                       'shipping_rate_data' => [
