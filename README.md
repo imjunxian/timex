@@ -1,6 +1,6 @@
 # Timex
 
-Final Year Project - Online Watch Shop
+PHP Project - Online Watch Shop
 
 ## Authors
 
