@@ -315,7 +315,7 @@
               </li>
 
               <li class="nav-item">
-                <a href="https://analytics.google.com/analytics/web/#/p299481977/reports/reportinghub?params=_u..nav%3Dmaui&collectionId=app" class="nav-link" target="_blank">
+                <a href="https://analytics.google.com/analytics/web/#/p299481977/realtime/overview?params=_u..nav%3Dmaui&collectionId=app" class="nav-link" target="_blank">
                   <i class="nav-icon fa fa-chart-line"></i>
                   <p>
                     Google Analytics
