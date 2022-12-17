@@ -11,7 +11,7 @@ PHP Project - Online Watch Shop
 ![](screenshot/chatbot.jpg)
 
 #### Stripe
-![](screenshot/Stripe.jpg)
+![](screenshot/stripe.jpg)
 
 #### Admin Login Page
 ![](screenshot/adminLogin.jpg)
