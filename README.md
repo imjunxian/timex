@@ -1,6 +1,6 @@
 # Timex
 
-PHP Project - Online Watch Shop
+PHP Project - Ecommerce with Google Analytics, Stripe Payment, DialogFlow ChatBot & RSA Encryption Algorithms
 
 ### Screenshots
 
