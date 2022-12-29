@@ -1,6 +1,6 @@
 # Timex
 
-PHP Project - Ecommerce with Google Analytics, Stripe Payment, DialogFlow API (Kommunicate ChatBot), RSA Encryption Algorithms & Cloud Firestore
+PHP Project - Ecommerce with Google Analytics, Stripe Payment, DialogFlow API (ChatBot By Kommunicate), RSA Encryption Algorithms & Cloud Firestore
 
 ### Screenshots
 
