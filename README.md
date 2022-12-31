@@ -1,6 +1,6 @@
 # Timex
 
-PHP Project - Online Watch Shop
+PHP Project - Ecommerce with Google Analytics, Stripe Payment, DialogFlow API (ChatBot By Kommunicate), RSA Encryption Algorithms & Cloud Firestore
 
 ### Screenshots
 
@@ -25,7 +25,3 @@ PHP Project - Online Watch Shop
 #### Cloud Firestore
 ![](screenshot/firestore.jpg)
 
-## Authors
-
-- Lee Jun Xian
-- Heng Wey Chin
