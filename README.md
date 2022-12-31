@@ -25,7 +25,3 @@ PHP Project - Ecommerce with Google Analytics, Stripe Payment, DialogFlow API (C
 #### Cloud Firestore
 ![](screenshot/firestore.jpg)
 
-## Authors
-
-- Lee Jun Xian
-- Heng Wey Chin
